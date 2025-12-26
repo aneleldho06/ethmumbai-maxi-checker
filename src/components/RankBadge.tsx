@@ -1,3 +1,4 @@
+import React from "react";
 import { RankInfo } from "@/lib/rankingSystem";
 import { cn } from "@/lib/utils";
 
@@ -7,7 +8,7 @@ interface RankBadgeProps {
   showDescription?: boolean;
 }
 
-export function RankBadge({ rank, size = "md", showDescription = false }: RankBadgeProps) {
+export const RankBadge = React.memo(function RankBadge({ rank, size = "md", showDescription = false }: RankBadgeProps) {
   const sizeClasses = {
     sm: "text-xs px-2 py-1",
     md: "text-sm px-4 py-2",
@@ -39,4 +40,4 @@ export function RankBadge({ rank, size = "md", showDescription = false }: RankBa
       )}
     </div>
   );
-}
+});

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import html2canvas from "html2canvas";
 import { Download, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ interface ResultsCardProps {
   rank: RankInfo;
 }
 
-export const ResultsCard = React.memo(function ResultsCard({
+export function ResultsCard({
   username,
   score,
   totalMentions,
@@ -145,4 +145,4 @@ export const ResultsCard = React.memo(function ResultsCard({
       </div>
     </div>
   );
-});
+}

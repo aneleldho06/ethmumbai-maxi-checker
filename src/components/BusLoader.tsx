@@ -1,11 +1,10 @@
-import React from "react";
 import { Bus } from "lucide-react";
 
 interface BusLoaderProps {
   message?: string;
 }
 
-export const BusLoader = React.memo(function BusLoader({ message = "Scanning tweets..." }: BusLoaderProps) {
+export function BusLoader({ message = "Scanning tweets..." }: BusLoaderProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-6 py-12">
       <div className="relative">
@@ -51,4 +50,4 @@ export const BusLoader = React.memo(function BusLoader({ message = "Scanning twe
       </div>
     </div>
   );
-});
+}

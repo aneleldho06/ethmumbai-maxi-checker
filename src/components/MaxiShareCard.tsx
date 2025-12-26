@@ -437,24 +437,29 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
           style={{
             backgroundColor: "#FFFFFF",
             color: "#E2231A",
-            borderRadius: 28,
-            padding: "28px 80px",
+            borderRadius: 32,              // slightly smoother
+            padding: "36px 96px",          // ⬅️ more horizontal + vertical space
             textAlign: "center",
-            marginBottom: 28,
+            marginBottom: 36,              // more breathing below
+            minWidth: 420,                 // keeps it visually strong
           }}
         >
+          {/* SCORE LABEL */}
           <div
             style={{
-              fontSize: 40,
-              fontWeight: 800,
-              letterSpacing: 2,
+              fontSize: 28,                // ⬅️ reduced from 40 (cleaner)
+              fontWeight: 900,
+              letterSpacing: 3,
+              marginBottom: 16,            // ⬅️ proper separation
             }}
           >
             SCORE
           </div>
+
+          {/* SCORE NUMBER */}
           <div
             style={{
-              fontSize: 96,
+              fontSize: 104,               // ⬅️ slightly bigger
               fontWeight: 900,
               lineHeight: 1,
             }}
@@ -462,6 +467,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
             {score}
           </div>
         </div>
+
 
         {/* RANK TITLE */}
         <div

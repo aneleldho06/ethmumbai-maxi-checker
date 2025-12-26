@@ -413,7 +413,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
               objectFit: "cover",
             }}
           />
-          <span>{rankStyle.emoji}</span>
+          {/* <span>{rankStyle.emoji}</span> */}
         </div>
 
         {/* HANDLE */}

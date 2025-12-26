@@ -33,7 +33,7 @@ export function Footer() {
           {/* Social links */}
           <div className="flex items-center justify-center gap-4">
             <a
-              href="https://twitter.com/ETHMumbaiIn"
+              href="https://twitter.com/ethmumbai"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/10 hover:bg-background/20 transition-colors"

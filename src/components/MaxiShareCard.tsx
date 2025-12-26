@@ -437,29 +437,24 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
           style={{
             backgroundColor: "#FFFFFF",
             color: "#E2231A",
-            borderRadius: 32,              // slightly smoother
-            padding: "36px 70px",          // ⬅️ more horizontal + vertical space
+            borderRadius: 28,
+            padding: "28px 80px",
             textAlign: "center",
-            marginBottom: 36,              // more breathing below
-            minWidth: 420,                 // keeps it visually strong
+            marginBottom: 28,
           }}
         >
-          {/* SCORE LABEL */}
           <div
             style={{
-              fontSize: 40,                // ⬅️ reduced from 40 (cleaner)
-              fontWeight: 900,
-              letterSpacing: 3,
-              marginBottom: 16,            // ⬅️ proper separation
+              fontSize: 40,
+              fontWeight: 800,
+              letterSpacing: 2,
             }}
           >
             SCORE
           </div>
-
-          {/* SCORE NUMBER */}
           <div
             style={{
-              fontSize: 104,               // ⬅️ slightly bigger
+              fontSize: 96,
               fontWeight: 900,
               lineHeight: 1,
             }}
@@ -468,33 +463,45 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
           </div>
         </div>
 
-
-        {/* RANK TITLE */}
+        {/* SCORE NUMBER */}
         <div
           style={{
-            fontSize: 40,
+            fontSize: 104,               // ⬅️ slightly bigger
             fontWeight: 900,
-            color: rankStyle.color,
-            marginBottom: 36,
+            lineHeight: 1,
           }}
         >
-          {rankStyle.emoji} {rankTitle}
+          {score}
         </div>
+      </div>
 
-        {/* CAPTION */}
-        <div
-          style={{
-            fontSize: 30,
-            textAlign: "center",
-            maxWidth: 820,
-            lineHeight: 1.4,
-            opacity: 0.95,
-          }}
-        >
-          {caption}
-        </div>
 
-        {/* FOOTER */}
+        {/* RANK TITLE */ }
+    <div
+      style={{
+        fontSize: 40,
+        fontWeight: 900,
+        color: rankStyle.color,
+        marginBottom: 36,
+      }}
+    >
+      {rankStyle.emoji} {rankTitle}
+    </div>
+
+    {/* CAPTION */ }
+    <div
+      style={{
+        fontSize: 30,
+        textAlign: "center",
+        maxWidth: 820,
+        lineHeight: 1.4,
+        opacity: 0.95,
+      }}
+    >
+      {caption}
+    </div>
+
+    {/* FOOTER */ }
         <div
           style={{
             position: "absolute",
@@ -518,7 +525,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
         >
           Made by @0xhiddenminner
         </div>
-      </div>
+      </div >
     );
   }
 );

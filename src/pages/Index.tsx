@@ -1,27 +1,44 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { UsernameChecker } from "@/components/UsernameChecker";
 import { Leaderboard } from "@/components/Leaderboard";
 import { Footer } from "@/components/Footer";
-import { getLeaderboard, LeaderboardEntry } from "@/lib/leaderboard";
+import { useLeaderboard } from "@/hooks/useLeaderboard";
 
 const Index = () => {
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [highlightUsername, setHighlightUsername] = useState<string>("");
+  const { entries, loading, upsertEntry } = useLeaderboard();
 
-  useEffect(() => {
-    setLeaderboard(getLeaderboard());
-  }, []);
-
-  const handleResultsUpdate = (entries: LeaderboardEntry[], username: string) => {
-    setLeaderboard(entries);
+  const handleResultsUpdate = async (
+    username: string,
+    score: number,
+    originalCount: number,
+    replyCount: number,
+    retweetCount: number,
+    totalMentions: number,
+    rankTitle: string
+  ) => {
+    await upsertEntry({
+      username,
+      score,
+      originalCount,
+      replyCount,
+      retweetCount,
+      totalMentions,
+      rankTitle,
+    });
     setHighlightUsername(username);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <Navbar />
+      
       {/* Hero Section */}
-      <Hero />
+      <div className="pt-16">
+        <Hero />
+      </div>
 
       {/* Main Content */}
       <main className="flex-1 container py-12 md:py-16">
@@ -32,8 +49,12 @@ const Index = () => {
           </div>
 
           {/* Right Column - Leaderboard */}
-          <div className="lg:sticky lg:top-8">
-            <Leaderboard entries={leaderboard} highlightUsername={highlightUsername} />
+          <div className="lg:sticky lg:top-24">
+            <Leaderboard
+              entries={entries}
+              highlightUsername={highlightUsername}
+              loading={loading}
+            />
           </div>
         </div>
       </main>

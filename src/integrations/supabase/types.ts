@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leaderboard: {
+        Row: {
+          created_at: string
+          id: string
+          last_checked: string
+          original_count: number
+          rank_title: string
+          reply_count: number
+          retweet_count: number
+          score: number
+          total_mentions: number
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_checked?: string
+          original_count?: number
+          rank_title?: string
+          reply_count?: number
+          retweet_count?: number
+          score?: number
+          total_mentions?: number
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_checked?: string
+          original_count?: number
+          rank_title?: string
+          reply_count?: number
+          retweet_count?: number
+          score?: number
+          total_mentions?: number
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

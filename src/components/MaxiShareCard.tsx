@@ -383,7 +383,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
             letterSpacing: 1,
           }}
         >
-          RANK – #{RANKS}
+          RANK – #{rankPosition}
         </div>
 
         {/* PROFILE PICTURE */}

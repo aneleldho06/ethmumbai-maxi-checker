@@ -1,14 +1,21 @@
 import { useState } from "react";
-import { Search, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BusLoader } from "./BusLoader";
 import { ResultsCard } from "./ResultsCard";
 import { generateMockTweetData, calculateScore, getRank } from "@/lib/rankingSystem";
-import { addToLeaderboard, LeaderboardEntry } from "@/lib/leaderboard";
 
 interface UsernameCheckerProps {
-  onResultsUpdate: (entries: LeaderboardEntry[], username: string) => void;
+  onResultsUpdate: (
+    username: string,
+    score: number,
+    originalCount: number,
+    replyCount: number,
+    retweetCount: number,
+    totalMentions: number,
+    rankTitle: string
+  ) => void;
 }
 
 interface Results {
@@ -39,10 +46,18 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
     // Generate mock data
     const tweetData = generateMockTweetData(cleanUsername);
     const score = calculateScore(tweetData);
+    const rankInfo = getRank(score);
     
-    // Update leaderboard
-    const updatedLeaderboard = addToLeaderboard(cleanUsername, score);
-    onResultsUpdate(updatedLeaderboard, cleanUsername);
+    // Update leaderboard via callback
+    onResultsUpdate(
+      cleanUsername,
+      score,
+      tweetData.originalCount,
+      tweetData.replyCount,
+      tweetData.retweetCount,
+      tweetData.totalMentions,
+      rankInfo.title
+    );
     
     setResults({
       username: cleanUsername,

@@ -52,45 +52,23 @@ export function ResultsCard({
   //       variant: "destructive",
   //     });
   //   }
+  import html2canvas from "html2canvas";
+
   const downloadCard = async () => {
-    if (!cardRef.current) return;
+    if (!shareCardRef.current) return;
 
-    try {
-      const scale = window.devicePixelRatio || 2;
+    const canvas = await html2canvas(shareCardRef.current, {
+      scale: 3, // 👈 key
+      backgroundColor: null,
+      useCORS: true,
+    });
 
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: "#FFFFFF", // ❗ FIX: solid background
-        scale: scale * 2,            // ❗ FIX: higher DPI
-        useCORS: true,               // ❗ FIX: fonts & icons
-        allowTaint: true,
-        logging: false,
-        windowWidth: cardRef.current.scrollWidth,
-        windowHeight: cardRef.current.scrollHeight,
-      });
+    const image = canvas.toDataURL("image/png", 1.0);
 
-      // Create a high-quality image
-      const image = canvas.toDataURL("image/png", 1.0);
-
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = `ethmumbai-maxi-${username}.png`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      toast({
-        title: "Downloaded!",
-        description: "Your ETHMumbai Maxi card is ready to share.",
-      });
-    } catch (err) {
-      console.error(err);
-      toast({
-        title: "Error",
-        description: "Failed to download the card.",
-        variant: "destructive",
-      });
-    }
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = `ethmumbai-maxi-${username}.png`;
+    link.click();
   };
 
   const shareOnTwitter = () => {
@@ -108,14 +86,18 @@ export function ResultsCard({
         ref={cardRef}
         className="bus-card overflow-hidden animate-scale-in"
       > */}
-      <div
-        ref={cardRef}
-        className="bus-card overflow-hidden animate-scale-in bg-white"
-        style={{
-          width: "720px",     // ❗ fixed export width
-          maxWidth: "720px",
-        }}
-      >
+      const shareCardRef = useRef<HTMLDivElement>(null);
+
+        {/* Hidden Share Card */}
+        <div style={{ position: "fixed", left: "-9999px", top: 0 }}>
+          <MaxiShareCard
+            ref={shareCardRef}
+            username={username}
+            score={score}
+            rankTitle={rank.title}
+          />
+        </div>
+
 
 
         {/* Yellow strip header */}
@@ -179,19 +161,19 @@ export function ResultsCard({
         <div className="bg-muted/50 px-6 py-3 text-center">
           <p className="text-xs text-muted-foreground">ethmumbai-maxi-checker.lovable.app</p>
         </div>
-      </div>
-
-      {/* Action buttons */}
-      <div className="flex gap-3 justify-center">
-        <Button variant="outline" onClick={downloadCard}>
-          <Download className="mr-2" />
-          Download
-        </Button>
-        <Button variant="default" onClick={shareOnTwitter}>
-          <Twitter className="mr-2" />
-          Share
-        </Button>
-      </div>
     </div>
+
+      {/* Action buttons */ }
+  <div className="flex gap-3 justify-center">
+    <Button variant="outline" onClick={downloadCard}>
+      <Download className="mr-2" />
+      Download
+    </Button>
+    <Button variant="default" onClick={shareOnTwitter}>
+      <Twitter className="mr-2" />
+      Share
+    </Button>
+  </div>
+    </div >
   );
 }

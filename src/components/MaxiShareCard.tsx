@@ -388,17 +388,17 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
         {/* PROFILE PICTURE */}
         <div
           style={{
-            width: 260,
-            height: 260,
+            width: 520,                 // ⬆️ 2x
+            height: 520,                // ⬆️ 2x
             borderRadius: "50%",
-            border: "10px solid #FFFFFF",
+            border: "20px solid #FFFFFF", // ⬆️ thicker border
             overflow: "hidden",
-            marginBottom: 24,
+            marginBottom: 32,           // slight increase
             backgroundColor: "#FFFFFF22",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 120,
+            fontSize: 240,              // ⬆️ fallback emoji size
           }}
         >
           <img
@@ -413,7 +413,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
               objectFit: "cover",
             }}
           />
-          {/* <span>{rankStyle.emoji}</span> */}
+
         </div>
 
         {/* HANDLE */}

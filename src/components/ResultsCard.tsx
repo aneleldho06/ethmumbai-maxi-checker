@@ -29,18 +29,18 @@ export function ResultsCard({
 
   // const downloadCard = async () => {
   //   if (!cardRef.current) return;
-    
+
   //   try {
   //     const canvas = await html2canvas(cardRef.current, {
   //       backgroundColor: null,
   //       scale: 2,
   //     });
-      
+
   //     const link = document.createElement("a");
   //     link.download = `ethmumbai-maxi-${username}.png`;
   //     link.href = canvas.toDataURL("image/png");
   //     link.click();
-      
+
   //     toast({
   //       title: "Downloaded!",
   //       description: "Your ETHMumbai Maxi card has been saved.",
@@ -53,45 +53,45 @@ export function ResultsCard({
   //     });
   //   }
   const downloadCard = async () => {
-  if (!cardRef.current) return;
+    if (!cardRef.current) return;
 
-  try {
-    const scale = window.devicePixelRatio || 2;
+    try {
+      const scale = window.devicePixelRatio || 2;
 
-    const canvas = await html2canvas(cardRef.current, {
-      backgroundColor: "#FFFFFF", // ❗ FIX: solid background
-      scale: scale * 2,            // ❗ FIX: higher DPI
-      useCORS: true,               // ❗ FIX: fonts & icons
-      allowTaint: true,
-      logging: false,
-      windowWidth: cardRef.current.scrollWidth,
-      windowHeight: cardRef.current.scrollHeight,
-    });
+      const canvas = await html2canvas(cardRef.current, {
+        backgroundColor: "#FFFFFF", // ❗ FIX: solid background
+        scale: scale * 2,            // ❗ FIX: higher DPI
+        useCORS: true,               // ❗ FIX: fonts & icons
+        allowTaint: true,
+        logging: false,
+        windowWidth: cardRef.current.scrollWidth,
+        windowHeight: cardRef.current.scrollHeight,
+      });
 
-    // Create a high-quality image
-    const image = canvas.toDataURL("image/png", 1.0);
+      // Create a high-quality image
+      const image = canvas.toDataURL("image/png", 1.0);
 
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = `ethmumbai-maxi-${username}.png`;
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = `ethmumbai-maxi-${username}.png`;
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    toast({
-      title: "Downloaded!",
-      description: "Your ETHMumbai Maxi card is ready to share.",
-    });
-  } catch (err) {
-    console.error(err);
-    toast({
-      title: "Error",
-      description: "Failed to download the card.",
-      variant: "destructive",
-    });
-  }
-};
+      toast({
+        title: "Downloaded!",
+        description: "Your ETHMumbai Maxi card is ready to share.",
+      });
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Error",
+        description: "Failed to download the card.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const shareOnTwitter = () => {
     const text = `I'm an ${rank.title} ${rank.emoji} with a score of ${score}!\n\nCheck how big of an #ETHMumbai fan YOU are 👇`;
@@ -104,27 +104,37 @@ export function ResultsCard({
 
   return (
     <div className="space-y-4">
-      <div
+      {/* <div
         ref={cardRef}
         className="bus-card overflow-hidden animate-scale-in"
+      > */}
+      <div
+        ref={cardRef}
+        className="bus-card overflow-hidden animate-scale-in bg-white"
+        style={{
+          width: "720px",     // ❗ fixed export width
+          maxWidth: "720px",
+        }}
       >
+
+
         {/* Yellow strip header */}
         <div className="yellow-strip" />
-        
+
         {/* Red header */}
         <div className="bg-primary px-6 py-4 text-center">
           <h3 className="text-primary-foreground text-xl font-extrabold">
             ETHMumbai Maxi Score
           </h3>
         </div>
-        
+
         {/* Content */}
         <div className="p-6 space-y-6">
           {/* Username */}
           <div className="text-center">
             <p className="text-muted-foreground text-sm">@{username}</p>
           </div>
-          
+
           {/* Score */}
           <div className="text-center">
             <div className="animate-score-pop">
@@ -132,12 +142,12 @@ export function ResultsCard({
             </div>
             <p className="text-muted-foreground mt-2">Total Points</p>
           </div>
-          
+
           {/* Rank Badge */}
           <div className="flex justify-center">
             <RankBadge rank={rank} size="lg" showDescription />
           </div>
-          
+
           {/* Stats breakdown */}
           <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
             <div className="text-center">
@@ -156,7 +166,7 @@ export function ResultsCard({
               <p className="text-xs text-muted-foreground">×1 pt</p>
             </div>
           </div>
-          
+
           {/* Total mentions */}
           <div className="text-center pt-4 border-t border-border">
             <p className="text-sm text-muted-foreground">
@@ -164,13 +174,13 @@ export function ResultsCard({
             </p>
           </div>
         </div>
-        
+
         {/* Footer */}
         <div className="bg-muted/50 px-6 py-3 text-center">
           <p className="text-xs text-muted-foreground">ethmumbai-maxi-checker.lovable.app</p>
         </div>
       </div>
-      
+
       {/* Action buttons */}
       <div className="flex gap-3 justify-center">
         <Button variant="outline" onClick={downloadCard}>

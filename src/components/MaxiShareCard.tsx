@@ -129,11 +129,11 @@ const RANK_STYLES: Record<
   string,
   { emoji: string; color: string }
 > = {
-  "Curious Commuter": { emoji: "🚌", color: "#FFE082" },
-  "ETHMumbai Rider": { emoji: "🎫", color: "#FFD54F" },
-  "BEST Bus Regular": { emoji: "🚍", color: "#FFCA28" },
-  "ETHMumbai Local": { emoji: "🏙️", color: "#FFB300" },
-  "ETHMumbai Maxi": { emoji: "🔥", color: "#FF7043" },
+  "Curious Commuter": { emoji: "🚌", color: "#ffffffff" },
+  "ETHMumbai Rider": { emoji: "🎫", color: "#ffffffff" },
+  "BEST Bus Regular": { emoji: "🚍", color: "#ffffffff" },
+  "ETHMumbai Local": { emoji: "🏙️", color: "#ffffffff" },
+  "ETHMumbai Maxi": { emoji: "🔥", color: "#ffffffff" },
   "ETHMumbai OG": { emoji: "❤️‍🔥", color: "#FFFFFF" },
 };
 

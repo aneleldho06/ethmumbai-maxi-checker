@@ -27,32 +27,71 @@ export function ResultsCard({
 }: ResultsCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const downloadCard = async () => {
-    if (!cardRef.current) return;
+  // const downloadCard = async () => {
+  //   if (!cardRef.current) return;
     
-    try {
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: null,
-        scale: 2,
-      });
+  //   try {
+  //     const canvas = await html2canvas(cardRef.current, {
+  //       backgroundColor: null,
+  //       scale: 2,
+  //     });
       
-      const link = document.createElement("a");
-      link.download = `ethmumbai-maxi-${username}.png`;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
+  //     const link = document.createElement("a");
+  //     link.download = `ethmumbai-maxi-${username}.png`;
+  //     link.href = canvas.toDataURL("image/png");
+  //     link.click();
       
-      toast({
-        title: "Downloaded!",
-        description: "Your ETHMumbai Maxi card has been saved.",
-      });
-    } catch {
-      toast({
-        title: "Error",
-        description: "Failed to download the card.",
-        variant: "destructive",
-      });
-    }
-  };
+  //     toast({
+  //       title: "Downloaded!",
+  //       description: "Your ETHMumbai Maxi card has been saved.",
+  //     });
+  //   } catch {
+  //     toast({
+  //       title: "Error",
+  //       description: "Failed to download the card.",
+  //       variant: "destructive",
+  //     });
+  //   }
+  const downloadCard = async () => {
+  if (!cardRef.current) return;
+
+  try {
+    const scale = window.devicePixelRatio || 2;
+
+    const canvas = await html2canvas(cardRef.current, {
+      backgroundColor: "#FFFFFF", // ❗ FIX: solid background
+      scale: scale * 2,            // ❗ FIX: higher DPI
+      useCORS: true,               // ❗ FIX: fonts & icons
+      allowTaint: true,
+      logging: false,
+      windowWidth: cardRef.current.scrollWidth,
+      windowHeight: cardRef.current.scrollHeight,
+    });
+
+    // Create a high-quality image
+    const image = canvas.toDataURL("image/png", 1.0);
+
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = `ethmumbai-maxi-${username}.png`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Downloaded!",
+      description: "Your ETHMumbai Maxi card is ready to share.",
+    });
+  } catch (err) {
+    console.error(err);
+    toast({
+      title: "Error",
+      description: "Failed to download the card.",
+      variant: "destructive",
+    });
+  }
+};
 
   const shareOnTwitter = () => {
     const text = `I'm an ${rank.title} ${rank.emoji} with a score of ${score}!\n\nCheck how big of an #ETHMumbai fan YOU are 👇`;

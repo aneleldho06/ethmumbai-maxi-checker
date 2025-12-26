@@ -329,10 +329,10 @@ const RANK_STYLES: Record<
   { emoji: string; color: string }
 > = {
   "Curious Commuter": { emoji: "🚌", color: "#FFE082" },
-  "ETHMumbai Rider": { emoji: "🎫", color: "#FFD54F" },
-  "BEST Bus Regular": { emoji: "🚍", color: "#FFCA28" },
-  "ETHMumbai Local": { emoji: "🏙️", color: "#FFB300" },
-  "ETHMumbai Maxi": { emoji: "🔥", color: "#FF7043" },
+  "ETHMumbai Rider": { emoji: "🎫", color: "#ffffffff" },
+  "BEST Bus Regular": { emoji: "🚍", color: "#ffffffff" },
+  "ETHMumbai Local": { emoji: "🏙️", color: "#ffffffff" },
+  "ETHMumbai Maxi": { emoji: "🔥", color: "#ffffffff" },
   "ETHMumbai OG": { emoji: "❤️‍🔥", color: "#FFFFFF" },
 };
 
@@ -341,6 +341,10 @@ const CAPTIONS = [
   "Mumbai builds. ETHMumbai accelerates.",
   "ETHMumbai isn’t an event. It’s a movement.",
   "From timelines to terminals — ETHMumbai is coming.",
+  "ETHMumbai is stronger because of you.",
+  "Keep building — ETHMumbai believes in you.",
+  "Every great Ethereum builder started with small steps.",
+  "Skip one chai. Get an ETHMumbai ticket.",
 ];
 
 export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(

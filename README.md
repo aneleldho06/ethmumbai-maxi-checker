@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: [https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID](https://ethmumbai-maxi-checker.lovable.app)
+**URL**: [https://ethmumbai-maxi-checker.lovable.app]
 
 ## How can I edit this code?
 

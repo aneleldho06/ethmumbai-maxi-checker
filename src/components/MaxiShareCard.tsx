@@ -438,7 +438,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
             backgroundColor: "#FFFFFF",
             color: "#E2231A",
             borderRadius: 32,              // slightly smoother
-            padding: "36px 96px",          // ⬅️ more horizontal + vertical space
+            padding: "36px 70px",          // ⬅️ more horizontal + vertical space
             textAlign: "center",
             marginBottom: 36,              // more breathing below
             minWidth: 420,                 // keeps it visually strong
@@ -447,7 +447,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
           {/* SCORE LABEL */}
           <div
             style={{
-              fontSize: 28,                // ⬅️ reduced from 40 (cleaner)
+              fontSize: 40,                // ⬅️ reduced from 40 (cleaner)
               fontWeight: 900,
               letterSpacing: 3,
               marginBottom: 16,            // ⬅️ proper separation

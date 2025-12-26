@@ -454,7 +454,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
           </div>
           <div
             style={{
-              fontSize: 96,
+              fontSize: 70,
               fontWeight: 900,
               lineHeight: 1,
             }}

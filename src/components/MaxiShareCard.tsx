@@ -314,6 +314,7 @@
 
 // MaxiShareCard.displayName = "MaxiShareCard";
 
+import { RANKS } from "@/lib/rankingSystem";
 import React from "react";
 
 type Props = {
@@ -382,7 +383,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
             letterSpacing: 1,
           }}
         >
-          RANK – #{rankPosition}
+          RANK – #{RANKS}
         </div>
 
         {/* PROFILE PICTURE */}

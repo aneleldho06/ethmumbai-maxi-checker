@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BusLoader } from "./BusLoader";
 import { ResultsCard } from "./ResultsCard";
-import { generateMockTweetData, calculateScore, getRank } from "@/lib/rankingSystem";
+import { calculateScore, getRank, generateMockTweetData } from "@/lib/rankingSystem";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 interface UsernameCheckerProps {
   onResultsUpdate: (
@@ -39,12 +41,41 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
     
     setLoading(true);
     setResults(null);
+
+    let tweetData: { originalCount: number; replyCount: number; retweetCount: number; totalMentions: number };
+
+    try {
+      // Try to fetch real Twitter data via edge function
+      const { data, error } = await supabase.functions.invoke('twitter-search', {
+        body: { username: cleanUsername }
+      });
+
+      if (error || data?.error || data?.fallback) {
+        console.log('Twitter API unavailable, using mock data:', error || data?.error);
+        // Fallback to mock data if Twitter API fails
+        tweetData = generateMockTweetData(cleanUsername);
+        toast({
+          title: "Using simulated data",
+          description: "Twitter API is unavailable. Showing estimated results.",
+        });
+      } else {
+        tweetData = {
+          originalCount: data.originalCount,
+          replyCount: data.replyCount,
+          retweetCount: data.retweetCount,
+          totalMentions: data.totalMentions,
+        };
+      }
+    } catch (err) {
+      console.error('Error fetching Twitter data:', err);
+      // Fallback to mock data
+      tweetData = generateMockTweetData(cleanUsername);
+      toast({
+        title: "Using simulated data",
+        description: "Could not connect to Twitter. Showing estimated results.",
+      });
+    }
     
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 2000 + Math.random() * 1000));
-    
-    // Generate mock data
-    const tweetData = generateMockTweetData(cleanUsername);
     const score = calculateScore(tweetData);
     const rankInfo = getRank(score);
     

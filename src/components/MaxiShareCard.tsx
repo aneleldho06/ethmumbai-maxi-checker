@@ -376,7 +376,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
         }}
       >
         {/* TOP LEFT RANK */}
-        {rankPosition && (
+        {rankPosition !== undefined && (
           <div
             style={{
               position: "absolute",
@@ -391,6 +391,7 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
             RANK – #{rankPosition}
           </div>
         )}
+
 
         {/* PROFILE PICTURE */}
         <div

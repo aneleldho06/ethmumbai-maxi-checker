@@ -40,6 +40,7 @@ Inspired by Mumbai’s iconic **BEST bus culture** — bold, accessible, and bui
 ---
 
 ## 🖼️ Demo & Screenshots
+![Home Page](./images/home.png)
 
 > Add screenshots of the working website below
 

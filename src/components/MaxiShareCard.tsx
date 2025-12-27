@@ -577,7 +577,7 @@ export const MaxiShareCard = React.forwardRef<
             position: "relative",
           }}
         >
- {/* PROFILE PICTURE (SINGLE CIRCLE – FINAL FIX) */}
+{/* PROFILE PICTURE (VISIBLE FIX) */}
 <div
   style={{
     width: 320,
@@ -593,7 +593,8 @@ export const MaxiShareCard = React.forwardRef<
     alignItems: "center",
     justifyContent: "center",
     fontSize: 120,
-    backgroundColor: "transparent", // ✅ NO YELLOW LAYER
+    backgroundColor: "transparent",
+    zIndex: 10, // ✅ THIS IS THE KEY FIX
   }}
 >
   <img
@@ -606,15 +607,12 @@ export const MaxiShareCard = React.forwardRef<
       display: "block",
     }}
     onError={(e) => {
-      // Hide broken image
       e.currentTarget.style.display = "none";
-
-      // Show emoji fallback
-      const parent = e.currentTarget.parentElement;
-      if (parent) parent.textContent = "🔥";
+      e.currentTarget.parentElement!.textContent = "🔥";
     }}
   />
 </div>
+
 
           {/* USERNAME */}
           <div

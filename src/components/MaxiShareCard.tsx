@@ -570,7 +570,7 @@ export const MaxiShareCard = React.forwardRef<
   HTMLDivElement,
   MaxiShareCardProps
 >(({ username, score, rankTitle }, ref) => {
-  const profileImage = `https://unavatar.io/twitter/${username}`;
+ 
 
   return (
     <div
@@ -603,9 +603,10 @@ export const MaxiShareCard = React.forwardRef<
     padding: "180px 80px 80px",
     textAlign: "center",
     position: "relative",
-    overflow: "visible", // ✅ THIS FIXES EVERYTHING
+    overflow: "visible", // REQUIRED
   }}
 >
+
 
 {/* PROFILE PICTURE (VISIBLE FIX) */}
 <div

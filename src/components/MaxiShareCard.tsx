@@ -567,6 +567,7 @@ export const MaxiShareCard = React.forwardRef<
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          paddingTop: "80px", // 🔑 ADD THIS LINE
         }}
       >
         <div

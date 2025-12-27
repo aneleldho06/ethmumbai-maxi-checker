@@ -1,1 +1,4 @@
 project_id = "nblxhovqwpxdhqojvjos"
+
+[functions.twitter-search]
+verify_jwt = false

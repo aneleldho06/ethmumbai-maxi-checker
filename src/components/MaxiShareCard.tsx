@@ -314,214 +314,405 @@
 
 // MaxiShareCard.displayName = "MaxiShareCard";
 
-import { RANKS } from "@/lib/rankingSystem";
+//-------------NEW UPDATE----------------890218w12w21
+
+// import { RANKS } from "@/lib/rankingSystem";
+// import React from "react";
+
+// type Props = {
+//   username: string;
+//   score: number;
+//   rankTitle: string;
+//   rankPosition?: number; // Optional - may not have leaderboard position yet
+// };
+
+// const RANK_STYLES: Record<
+//   string,
+//   { emoji: string; color: string }
+// > = {
+//   "Curious Commuter": { emoji: "🚌", color: "#FFE082" },
+//   "ETHMumbai Rider": { emoji: "🎫", color: "#ffffffff" },
+//   "BEST Bus Regular": { emoji: "🚍", color: "#ffffffff" },
+//   "ETHMumbai Local": { emoji: "🏙️", color: "#ffffffff" },
+//   "ETHMumbai Maxi": { emoji: "🔥", color: "#ffffffff" },
+//   "ETHMumbai OG": { emoji: "❤️‍🔥", color: "#FFFFFF" },
+// };
+
+// const CAPTIONS = [
+//   "The ETHMumbai bus has no brakes.",
+//   "Mumbai builds. ETHMumbai accelerates.",
+//   "ETHMumbai isn’t an event. It’s a movement.",
+//   "From timelines to terminals — ETHMumbai is coming.",
+//   "ETHMumbai is stronger because of you.",
+//   "Keep building — ETHMumbai believes in you.",
+//   "Every great Ethereum builder started with small steps.",
+//   "Skip one chai. Get an ETHMumbai ticket.",
+// ];
+
+// export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
+//   ({ username, score, rankTitle, rankPosition }, ref) => {
+//     const rankStyle = RANK_STYLES[rankTitle] || {
+//       emoji: "🏆",
+//       color: "#FFFFFF",
+//     };
+
+//     const caption =
+//       CAPTIONS[Math.floor(Math.random() * CAPTIONS.length)];
+
+//     const profileImage = `https://unavatar.io/x/${username}`;
+
+//     return (
+//       <div
+//         ref={ref}
+//         style={{
+//           width: 1080,
+//           height: 1080,
+//           backgroundColor: "#E2231A",
+//           color: "#FFFFFF",
+//           fontFamily: "Inter, system-ui, sans-serif",
+//           position: "relative",
+//           display: "flex",
+//           flexDirection: "column",
+//           alignItems: "center",
+//           paddingTop: 120,
+//         }}
+//       >
+//         {/* TOP LEFT RANK */}
+//         {rankPosition !== undefined && (
+//           <div
+//             style={{
+//               position: "absolute",
+//               top: 40,
+//               left: 40,
+//               fontSize: 28,
+//               fontWeight: 800,
+//               color: "#FFD600",
+//               letterSpacing: 1,
+//             }}
+//           >
+//             RANK – #{rankPosition}
+//           </div>
+//         )}
+
+
+//         {/* PROFILE PICTURE */}
+//         <div
+//           style={{
+//             width: 350,                 // ⬆️ 2x
+//             height: 350,                // ⬆️ 2x
+//             borderRadius: "50%",
+//             border: "12px solid #FFFFFF", // ⬆️ thicker border
+//             overflow: "hidden",
+//             marginBottom: 28,           // slight increase
+//             backgroundColor: "#FFFFFF22",
+//             display: "flex",
+//             alignItems: "center",
+//             justifyContent: "center",
+//             fontSize: 120,              // ⬆️ fallback emoji size
+//           }}
+//         >
+//           <img
+//             src={profileImage}
+//             alt={username}
+//             onError={(e) => {
+//               e.currentTarget.style.display = "none";
+//             }}
+//             style={{
+//               width: "100%",
+//               height: "100%",
+//               objectFit: "cover",
+//             }}
+//           />
+
+//         </div>
+
+//         {/* HANDLE */}
+//         <div
+//           style={{
+//             fontSize: 38,
+//             fontWeight: 800,
+//             marginBottom: 36,
+//           }}
+//         >
+//           @{username}
+//         </div>
+
+//         {/* SCORE CARD */}
+//         <div
+//           style={{
+//             backgroundColor: "#FFFFFF",
+//             color: "#E2231A",
+//             borderRadius: 28,
+//             padding: "28px 80px",
+//             textAlign: "center",
+//             marginBottom: 28,
+//           }}
+//         >
+//           <div
+//             style={{
+//               fontSize: 40,
+//               fontWeight: 800,
+//               letterSpacing: 2,
+//             }}
+//           >
+//             SCORE
+//           </div>
+//           <div
+//             style={{
+//               fontSize: 70,
+//               fontWeight: 900,
+//               lineHeight: 1,
+//             }}
+//           >
+//             {score}
+//           </div>
+//         </div>
+
+
+
+
+
+//         {/* RANK TITLE */}
+//         <div
+//           style={{
+//             fontSize: 40,
+//             fontWeight: 900,
+//             color: rankStyle.color,
+//             marginBottom: 36,
+//           }}
+//         >
+//           {rankStyle.emoji} {rankTitle}
+//         </div>
+
+//         {/* CAPTION */}
+//         <div
+//           style={{
+//             fontSize: 30,
+//             textAlign: "center",
+//             maxWidth: 820,
+//             lineHeight: 1.4,
+//             opacity: 0.95,
+//           }}
+//         >
+//           {caption}
+//         </div>
+
+//         {/* FOOTER */}
+//         <div
+//           style={{
+//             position: "absolute",
+//             bottom: 40,
+//             left: 60,
+//             fontSize: 20,
+//             opacity: 0.85,
+//           }}
+//         >
+//           ethmumbai-maxi-checker.lovable.app
+//         </div>
+
+//         <div
+//           style={{
+//             position: "absolute",
+//             bottom: 40,
+//             right: 60,
+//             fontSize: 20,
+//             opacity: 0.9,
+//           }}
+//         >
+//           Made by @0xhiddenminner
+//         </div>
+//       </div >
+//     );
+//   }
+// );
+
+// MaxiShareCard.displayName = "MaxiShareCard";
+
+
+//------------------EDA MONAEEE GOOD VERY GOOD--------
+
 import React from "react";
 
-type Props = {
+interface MaxiShareCardProps {
   username: string;
   score: number;
   rankTitle: string;
-  rankPosition?: number; // Optional - may not have leaderboard position yet
-};
+  profileImage?: string;
+}
 
-const RANK_STYLES: Record<
-  string,
-  { emoji: string; color: string }
-> = {
-  "Curious Commuter": { emoji: "🚌", color: "#FFE082" },
-  "ETHMumbai Rider": { emoji: "🎫", color: "#ffffffff" },
-  "BEST Bus Regular": { emoji: "🚍", color: "#ffffffff" },
-  "ETHMumbai Local": { emoji: "🏙️", color: "#ffffffff" },
-  "ETHMumbai Maxi": { emoji: "🔥", color: "#ffffffff" },
-  "ETHMumbai OG": { emoji: "❤️‍🔥", color: "#FFFFFF" },
-};
+export const MaxiShareCard = React.forwardRef<
+  HTMLDivElement,
+  MaxiShareCardProps
+>(({ username, score, rankTitle, profileImage }, ref) => {
+  const fallbackEmoji = "🔥";
 
-const CAPTIONS = [
-  "The ETHMumbai bus has no brakes.",
-  "Mumbai builds. ETHMumbai accelerates.",
-  "ETHMumbai isn’t an event. It’s a movement.",
-  "From timelines to terminals — ETHMumbai is coming.",
-  "ETHMumbai is stronger because of you.",
-  "Keep building — ETHMumbai believes in you.",
-  "Every great Ethereum builder started with small steps.",
-  "Skip one chai. Get an ETHMumbai ticket.",
-];
-
-export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
-  ({ username, score, rankTitle, rankPosition }, ref) => {
-    const rankStyle = RANK_STYLES[rankTitle] || {
-      emoji: "🏆",
-      color: "#FFFFFF",
-    };
-
-    const caption =
-      CAPTIONS[Math.floor(Math.random() * CAPTIONS.length)];
-
-    const profileImage = `https://unavatar.io/x/${username}`;
-
-    return (
+  return (
+    <div
+      ref={ref}
+      style={{
+        width: 1080,
+        height: 1080,
+        position: "relative",
+        backgroundImage: "url(/ethmumbai-bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        fontFamily: "Inter, system-ui, sans-serif",
+      }}
+    >
+      {/* Overlay */}
       <div
-        ref={ref}
         style={{
-          width: 1080,
-          height: 1080,
-          backgroundColor: "#E2231A",
-          color: "#FFFFFF",
-          fontFamily: "Inter, system-ui, sans-serif",
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "rgba(220, 38, 38, 0.92)",
+        }}
+      />
+
+      {/* Card */}
+      <div
+        style={{
           position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: 120,
+          margin: "120px auto",
+          width: 820,
+          backgroundColor: "#ffffff",
+          borderRadius: 48,
+          padding: "120px 80px 80px",
+          textAlign: "center",
         }}
       >
-        {/* TOP LEFT RANK */}
-        {rankPosition !== undefined && (
-          <div
-            style={{
-              position: "absolute",
-              top: 40,
-              left: 40,
-              fontSize: 28,
-              fontWeight: 800,
-              color: "#FFD600",
-              letterSpacing: 1,
-            }}
-          >
-            RANK – #{rankPosition}
-          </div>
-        )}
-
-
-        {/* PROFILE PICTURE */}
+        {/* Profile picture */}
         <div
           style={{
-            width: 350,                 // ⬆️ 2x
-            height: 350,                // ⬆️ 2x
+            width: 220,
+            height: 220,
             borderRadius: "50%",
-            border: "12px solid #FFFFFF", // ⬆️ thicker border
+            border: "12px solid white",
             overflow: "hidden",
-            marginBottom: 28,           // slight increase
-            backgroundColor: "#FFFFFF22",
+            margin: "-220px auto 24px",
+            backgroundColor: "#FDE047",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 120,              // ⬆️ fallback emoji size
+            fontSize: 96,
           }}
         >
-          <img
-            src={profileImage}
-            alt={username}
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-
+          {profileImage ? (
+            <img
+              src={profileImage}
+              alt={username}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          ) : (
+            fallbackEmoji
+          )}
         </div>
 
-        {/* HANDLE */}
+        {/* Username */}
         <div
           style={{
-            fontSize: 38,
+            fontSize: 40,
             fontWeight: 800,
-            marginBottom: 36,
+            color: "#DC2626",
+            marginBottom: 32,
           }}
         >
           @{username}
         </div>
 
-        {/* SCORE CARD */}
+        {/* Score pill */}
         <div
           style={{
-            backgroundColor: "#FFFFFF",
-            color: "#E2231A",
-            borderRadius: 28,
-            padding: "28px 80px",
-            textAlign: "center",
-            marginBottom: 28,
+            display: "inline-flex",
+            borderRadius: 24,
+            overflow: "hidden",
+            marginBottom: 32,
           }}
         >
           <div
             style={{
-              fontSize: 40,
+              backgroundColor: "#0EA5E9",
+              color: "white",
+              padding: "20px 36px",
+              fontSize: 36,
               fontWeight: 800,
-              letterSpacing: 2,
             }}
           >
             SCORE
           </div>
           <div
             style={{
-              fontSize: 70,
+              backgroundColor: "#FACC15",
+              color: "#7C2D12",
+              padding: "20px 44px",
+              fontSize: 44,
               fontWeight: 900,
-              lineHeight: 1,
             }}
           >
             {score}
           </div>
         </div>
 
-
-
-
-
-        {/* RANK TITLE */}
+        {/* Rank */}
         <div
           style={{
-            fontSize: 40,
+            fontSize: 44,
             fontWeight: 900,
-            color: rankStyle.color,
-            marginBottom: 36,
+            color: "#DC2626",
+            marginBottom: 24,
           }}
         >
-          {rankStyle.emoji} {rankTitle}
+          {rankTitle}
         </div>
 
-        {/* CAPTION */}
+        {/* Tagline */}
         <div
           style={{
-            fontSize: 30,
-            textAlign: "center",
-            maxWidth: 820,
-            lineHeight: 1.4,
-            opacity: 0.95,
+            fontSize: 28,
+            fontWeight: 600,
+            color: "#B91C1C",
+            marginBottom: 60,
           }}
         >
-          {caption}
+          ETHMumbai isn’t an event. It’s a movement.
         </div>
+      </div>
 
-        {/* FOOTER */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 40,
-            left: 60,
-            fontSize: 20,
-            opacity: 0.85,
-          }}
-        >
-          ethmumbai-maxi-checker.lovable.app
-        </div>
+      {/* Footer */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 40,
+          left: 60,
+          color: "white",
+          fontSize: 22,
+          opacity: 0.9,
+        }}
+      >
+        ethmumbai-maxi-checker
+      </div>
 
-        <div
-          style={{
-            position: "absolute",
-            bottom: 40,
-            right: 60,
-            fontSize: 20,
-            opacity: 0.9,
-          }}
-        >
-          Made by @0xhiddenminner
-        </div>
-      </div >
-    );
-  }
-);
+      <div
+        style={{
+          position: "absolute",
+          bottom: 40,
+          right: 60,
+          color: "white",
+          fontSize: 22,
+          opacity: 0.9,
+        }}
+      >
+        Made by @0xhiddenminner
+      </div>
+    </div>
+  );
+});
 
 MaxiShareCard.displayName = "MaxiShareCard";
+

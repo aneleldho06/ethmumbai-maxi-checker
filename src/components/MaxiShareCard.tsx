@@ -595,8 +595,8 @@ export const MaxiShareCard = React.forwardRef<
     alignItems: "center",
     justifyContent: "center",
     fontSize: 120,
-    backgroundColor: "transparent",
-    zIndex: 10, // ✅ THIS IS THE KEY FIX
+    backgroundColor: "transparent", // ❌ no yellow
+    zIndex: 20, // ✅ REQUIRED
   }}
 >
   <img
@@ -614,6 +614,7 @@ export const MaxiShareCard = React.forwardRef<
     }}
   />
 </div>
+
 
 
           {/* USERNAME */}

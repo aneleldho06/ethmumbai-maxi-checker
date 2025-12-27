@@ -608,22 +608,25 @@ export const MaxiShareCard = React.forwardRef<
               fontSize: 96,
             }}
           >
-            {profileImage ? (
-              <img
-                src={profileImage}
-                alt={username}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-            ) : (
-              fallbackEmoji
-            )}
+
+            
+            <img
+  src={`https://unavatar.io/twitter/${username}`}
+  alt={username}
+  crossOrigin="anonymous"
+  style={{
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  }}
+  onError={(e) => {
+    e.currentTarget.style.display = "none";
+    e.currentTarget.parentElement!.innerText = "🔥";
+  }}
+/>
+
+            
+            
           </div>
 
           {/* USERNAME */}

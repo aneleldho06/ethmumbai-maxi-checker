@@ -543,6 +543,9 @@ export const MaxiShareCard = React.forwardRef<
   HTMLDivElement,
   MaxiShareCardProps
 >(({ username, score, rankTitle }, ref) => {
+  // ✅ ONLY WORKING SOURCE
+  const profileImage = `https://unavatar.io/twitter/${username}`;
+
   return (
     <div
       ref={ref}
@@ -574,10 +577,10 @@ export const MaxiShareCard = React.forwardRef<
             padding: "180px 80px 80px",
             textAlign: "center",
             position: "relative",
-            overflow: "visible",
+            overflow: "visible", // 🔑 IMPORTANT
           }}
         >
-          {/* PROFILE PICTURE (FINAL FIX) */}
+          {/* PROFILE IMAGE – TOP MOST LAYER */}
           <div
             style={{
               width: 320,
@@ -589,15 +592,12 @@ export const MaxiShareCard = React.forwardRef<
               top: -160,
               left: "50%",
               transform: "translateX(-50%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#ffffff",
-              zIndex: 50,
+              zIndex: 9999, // 🔥 ABOVE EVERYTHING
+              backgroundColor: "#FFFFFF",
             }}
           >
             <img
-              src={`https://unavatar.io/twitter/${username}`}
+              src={profileImage}
               alt={username}
               crossOrigin="anonymous"
               style={{
@@ -609,7 +609,10 @@ export const MaxiShareCard = React.forwardRef<
               onError={(e) => {
                 e.currentTarget.style.display = "none";
                 const parent = e.currentTarget.parentElement;
-                if (parent) parent.innerHTML = "🔥";
+                if (parent) {
+                  parent.innerHTML =
+                    "<span style='font-size:120px'>🔥</span>";
+                }
               }}
             />
           </div>
@@ -627,7 +630,7 @@ export const MaxiShareCard = React.forwardRef<
             @{username}
           </div>
 
-          {/* SCORE PILL */}
+          {/* SCORE */}
           <div
             style={{
               display: "inline-flex",
@@ -660,7 +663,7 @@ export const MaxiShareCard = React.forwardRef<
             </div>
           </div>
 
-          {/* RANK TITLE */}
+          {/* RANK */}
           <div
             style={{
               fontSize: 44,
@@ -672,13 +675,11 @@ export const MaxiShareCard = React.forwardRef<
             {rankTitle}
           </div>
 
-          {/* TAGLINE */}
           <div
             style={{
               fontSize: 28,
               fontWeight: 600,
               color: "#B91C1C",
-              lineHeight: 1.4,
             }}
           >
             ETHMumbai isn’t an event. It’s a movement.
@@ -686,7 +687,7 @@ export const MaxiShareCard = React.forwardRef<
         </div>
       </div>
 
-      {/* FOOTER LEFT */}
+      {/* FOOTERS */}
       <div
         style={{
           position: "absolute",
@@ -699,7 +700,6 @@ export const MaxiShareCard = React.forwardRef<
         ethmumbai-maxi-checker
       </div>
 
-      {/* FOOTER RIGHT */}
       <div
         style={{
           position: "absolute",

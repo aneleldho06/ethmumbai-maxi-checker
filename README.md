@@ -1,73 +1,49 @@
-# Welcome to your Lovable project
+# 🚍 ETHMumbai Maxi Checker ❤️‍🔥
 
 ## Project info
 
-**URL**: [https://ethmumbai-maxi-checker.lovable.app]
+**WEBSITE LINK :**: [https://ethmumbai-maxi-checker.lovable.app]
 
-## How can I edit this code?
+> How big of an ETHMumbai fan are you?  
+> Let your X activity decide.
 
-There are several ways of editing your application.
+**ETHMumbai Maxi Checker** is a community-driven web app that measures how strongly someone resonates with the **ETHMumbai ecosystem**, based on their engagement on X (Twitter).
 
-**Use Lovable**
+🛠️ **Built as part of an official ETHMumbai community challenge**, aimed at celebrating builders and community participation.
 
-Simply visit the [Lovable Project](https://lovable.app) and start prompting.
+Inspired by Mumbai’s iconic **BEST bus culture** — bold, accessible, and builder-first.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## ✨ Features
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- 🔍 Analyze ETHMumbai-related engagement
+- 🧮 Calculate a **Maxi Score**
+- 🏆 Assign fun, meaningful **rank tiers**
+- 📊 Leaderboard (actively improving)
+- 🖼️ Generate a **shareable score card image**
+- 🐦 Share results directly on X
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🏆 Ranking Tiers
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+| Score Range | Rank |
+|------------|------|
+| 0–5 | 🚌 Curious Commuter |
+| 6–15 | 🎫 ETHMumbai Rider |
+| 16–40 | 🚍 BEST Bus Regular |
+| 41–80 | 🏙️ ETHMumbai Local |
+| 81–150 | 🔥 ETHMumbai Maxi |
+| 150+ | ❤️‍🔥 ETHMumbai OG |
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🖼️ Demo & Screenshots
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+> Add screenshots of the working website below
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```md
+![Home Page](./images/home.png)
+![Score Card](./images/score-card.png)
+![Leaderboard](./images/leaderboard.png)

@@ -321,7 +321,7 @@ type Props = {
   username: string;
   score: number;
   rankTitle: string;
-  rankPosition: number; // 👈 NEW
+  rankPosition?: number; // Optional - may not have leaderboard position yet
 };
 
 const RANK_STYLES: Record<
@@ -376,19 +376,21 @@ export const MaxiShareCard = React.forwardRef<HTMLDivElement, Props>(
         }}
       >
         {/* TOP LEFT RANK */}
-        <div
-          style={{
-            position: "absolute",
-            top: 40,
-            left: 40,
-            fontSize: 28,
-            fontWeight: 800,
-            color: "#FFD600", // gold yellow
-            letterSpacing: 1,
-          }}
-        >
-          RANK – #{rankPosition}
-        </div>
+        {rankPosition && (
+          <div
+            style={{
+              position: "absolute",
+              top: 40,
+              left: 40,
+              fontSize: 28,
+              fontWeight: 800,
+              color: "#FFD600",
+              letterSpacing: 1,
+            }}
+          >
+            RANK – #{rankPosition}
+          </div>
+        )}
 
         {/* PROFILE PICTURE */}
         <div

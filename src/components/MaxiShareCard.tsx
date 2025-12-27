@@ -544,7 +544,7 @@ export const MaxiShareCard = React.forwardRef<
   MaxiShareCardProps
 >(({ username, score, rankTitle }, ref) => {
   // ✅ ONLY WORKING SOURCE
-  const profileImage = `https://unavatar.io/twitter/${username}`;
+  const profileImage = `https://unavatar.io/x/${username}`;
 
   return (
     <div

@@ -567,16 +567,18 @@ export const MaxiShareCard = React.forwardRef<
           alignItems: "center",
         }}
       >
-        <div
-          style={{
-            width: 820,
-            backgroundColor: "#FFFFFF",
-            borderRadius: 56,
-            padding: "180px 80px 80px",
-            textAlign: "center",
-            position: "relative",
-          }}
-        >
+<div
+  style={{
+    width: 820,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 56,
+    padding: "180px 80px 80px",
+    textAlign: "center",
+    position: "relative",
+    overflow: "visible", // ✅ THIS FIXES EVERYTHING
+  }}
+>
+
 {/* PROFILE PICTURE (VISIBLE FIX) */}
 <div
   style={{

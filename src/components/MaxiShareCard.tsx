@@ -530,6 +530,23 @@
 
 
 //------------------EDA MONAEEE GOOD VERY GOOD--------
+
+async function imageToBase64(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url, { mode: "cors" });
+    const blob = await response.blob();
+
+    return await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
+
+
 import React from "react";
 
 interface MaxiShareCardProps {

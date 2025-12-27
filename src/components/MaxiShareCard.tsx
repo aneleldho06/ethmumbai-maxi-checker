@@ -545,7 +545,7 @@ async function imageToBase64(url: string): Promise<string | null> {
     return null;
   }
 }
-
+import { useEffect, useState } from "react";
 
 import React from "react";
 
@@ -556,6 +556,17 @@ interface MaxiShareCardProps {
 }
 
 export const MaxiShareCard = React.forwardRef<
+  const [avatar, setAvatar] = useState<string | null>(null);
+  useEffect(() => {
+  const loadAvatar = async () => {
+    const url = `https://unavatar.io/twitter/${username}`;
+    const base64 = await imageToBase64(url);
+    setAvatar(base64);
+  };
+
+  loadAvatar();
+}, [username]);
+
   HTMLDivElement,
   MaxiShareCardProps
 >(({ username, score, rankTitle }, ref) => {
@@ -616,20 +627,21 @@ export const MaxiShareCard = React.forwardRef<
     zIndex: 20, // ✅ REQUIRED
   }}
 >
+{avatar ? (
   <img
-    src={`https://unavatar.io/twitter/${username}`}
+    src={avatar}
     alt={username}
     style={{
       width: "100%",
       height: "100%",
       objectFit: "cover",
-      display: "block",
-    }}
-    onError={(e) => {
-      e.currentTarget.style.display = "none";
-      e.currentTarget.parentElement!.textContent = "🔥";
+      zIndex: 10,
     }}
   />
+) : (
+  <span style={{ fontSize: 120 }}>🔥</span>
+)}
+
 </div>
 
 

@@ -539,13 +539,13 @@ interface MaxiShareCardProps {
   rankTitle: string;
 }
 
-export const MaxiShareCard = React.forwardRef
+export const MaxiShareCard = React.forwardRef<
   HTMLDivElement,
   MaxiShareCardProps
 >(({ username, score, rankTitle }, ref) => {
   // ✅ ONLY WORKING SOURCE
   const profileImage = `https://unavatar.io/x/${username}`;
-  
+
   return (
     <div
       ref={ref}
@@ -559,7 +559,7 @@ export const MaxiShareCard = React.forwardRef
         fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
-      {/* CENTER CARD CONTAINER WITH EXTRA TOP SPACE */}
+      {/* CENTER CARD */}
       <div
         style={{
           width: "100%",
@@ -567,7 +567,6 @@ export const MaxiShareCard = React.forwardRef
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: "80px", // 🔑 Add space at top for profile image
         }}
       >
         <div
@@ -575,45 +574,45 @@ export const MaxiShareCard = React.forwardRef
             width: 820,
             backgroundColor: "#FFFFFF",
             borderRadius: 56,
-            padding: "200px 80px 80px", // 🔑 Increased top padding from 180px to 200px
+            padding: "180px 80px 80px",
             textAlign: "center",
             position: "relative",
-            overflow: "visible",
+            overflow: "visible", // 🔑 IMPORTANT
           }}
         >
-          {/* PROFILE IMAGE – CENTERED AND FULLY VISIBLE */}
-          <div
-            style={{
-              width: 320,
-              height: 320,
-              borderRadius: "50%",
-              border: "12px solid #FFFFFF",
-              overflow: "hidden",
-              position: "absolute",
-              top: -160, // Half of image height to create overlap effect
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 9999,
-              backgroundColor: "#FFFFFF",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.15)", // Optional: adds nice shadow
-            }}
-          >
-            <img
-              src={`https://unavatar.io/x/${username}`}
-              alt={username}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                const parent = e.currentTarget.parentElement;
-                if (parent) parent.innerHTML = "🔥";
-              }}
-            />
-          </div>
+          {/* PROFILE IMAGE – TOP MOST LAYER */}
+<div
+  style={{
+    width: 320,
+    height: 320,
+    borderRadius: "50%",
+    border: "12px solid #FFFFFF",
+    overflow: "hidden",
+    position: "absolute",
+    top: -160,
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 9999,
+    backgroundColor: "#FFFFFF",
+  }}
+>
+  <img
+    src={`https://unavatar.io/x/${username}`}
+    alt={username}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    }}
+    onError={(e) => {
+      e.currentTarget.style.display = "none";
+      const parent = e.currentTarget.parentElement;
+      if (parent) parent.innerHTML = "🔥";
+    }}
+  />
+</div>
+
 
           {/* USERNAME */}
           <div
@@ -672,6 +671,7 @@ export const MaxiShareCard = React.forwardRef
           >
             {rankTitle}
           </div>
+
           <div
             style={{
               fontSize: 28,
@@ -679,7 +679,7 @@ export const MaxiShareCard = React.forwardRef
               color: "#B91C1C",
             }}
           >
-            ETHMumbai isn't an event. It's a movement.
+            ETHMumbai isn’t an event. It’s a movement.
           </div>
         </div>
       </div>
@@ -696,6 +696,7 @@ export const MaxiShareCard = React.forwardRef
       >
         ethmumbai-maxi-checker
       </div>
+
       <div
         style={{
           position: "absolute",

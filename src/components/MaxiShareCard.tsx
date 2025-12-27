@@ -610,20 +610,43 @@ export const MaxiShareCard = React.forwardRef<
           >
 
             
-            <img
-  src={`https://unavatar.io/twitter/${username}`}
-  alt={username}
-  crossOrigin="anonymous"
+            {/* PROFILE PICTURE */}
+<div
   style={{
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
+    width: 350,
+    height: 350,
+    borderRadius: "50%",
+    border: "12px solid #FFFFFF",
+    overflow: "hidden",
+    marginBottom: 28,
+    backgroundColor: "#FFFFFF22",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 120, // fallback emoji size
   }}
-  onError={(e) => {
-    e.currentTarget.style.display = "none";
-    e.currentTarget.parentElement!.innerText = "🔥";
-  }}
-/>
+>
+  <img
+    src={`https://unavatar.io/twitter/${username}`}
+    alt={username}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    }}
+    onError={(e) => {
+      // Hide broken image
+      e.currentTarget.style.display = "none";
+
+      // Inject fallback emoji inside the same circle
+      const parent = e.currentTarget.parentElement;
+      if (parent) {
+        parent.innerHTML = "🔥";
+      }
+    }}
+  />
+</div>
+
 
             
             

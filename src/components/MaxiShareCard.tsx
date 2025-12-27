@@ -531,9 +531,18 @@
 
 //------------------EDA MONAEEE GOOD VERY GOOD--------
 
+import React, { useEffect, useState } from "react";
+
+interface MaxiShareCardProps {
+  username: string;
+  score: number;
+  rankTitle: string;
+}
+
+/* Helper: convert image to base64 so canvas can render it */
 async function imageToBase64(url: string): Promise<string | null> {
   try {
-    const response = await fetch(url, { mode: "cors" });
+    const response = await fetch(url);
     const blob = await response.blob();
 
     return await new Promise((resolve) => {
@@ -545,32 +554,22 @@ async function imageToBase64(url: string): Promise<string | null> {
     return null;
   }
 }
-import { useEffect, useState } from "react";
-
-import React from "react";
-
-interface MaxiShareCardProps {
-  username: string;
-  score: number;
-  rankTitle: string;
-}
 
 export const MaxiShareCard = React.forwardRef<
-  const [avatar, setAvatar] = useState<string | null>(null);
-  useEffect(() => {
-  const loadAvatar = async () => {
-    const url = `https://unavatar.io/twitter/${username}`;
-    const base64 = await imageToBase64(url);
-    setAvatar(base64);
-  };
-
-  loadAvatar();
-}, [username]);
-
   HTMLDivElement,
   MaxiShareCardProps
 >(({ username, score, rankTitle }, ref) => {
- 
+  const [avatar, setAvatar] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadAvatar = async () => {
+      const url = `https://unavatar.io/twitter/${username}`;
+      const base64 = await imageToBase64(url);
+      setAvatar(base64);
+    };
+
+    loadAvatar();
+  }, [username]);
 
   return (
     <div
@@ -579,7 +578,7 @@ export const MaxiShareCard = React.forwardRef<
         width: 1080,
         height: 1080,
         position: "relative",
-        backgroundImage: "url(/ethmumbai-bg.png)", // EXACT background
+        backgroundImage: "url(/ethmumbai-bg.png)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         fontFamily: "Inter, system-ui, sans-serif",
@@ -595,57 +594,51 @@ export const MaxiShareCard = React.forwardRef<
           alignItems: "center",
         }}
       >
-<div
-  style={{
-    width: 820,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 56,
-    padding: "180px 80px 80px",
-    textAlign: "center",
-    position: "relative",
-    overflow: "visible", // REQUIRED
-  }}
->
-
-
-{/* PROFILE PICTURE (VISIBLE FIX) */}
-<div
-  style={{
-    width: 320,
-    height: 320,
-    borderRadius: "50%",
-    border: "12px solid #FFFFFF",
-    overflow: "hidden",
-    position: "absolute",
-    top: -160,
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 120,
-    backgroundColor: "transparent", // ❌ no yellow
-    zIndex: 20, // ✅ REQUIRED
-  }}
->
-{avatar ? (
-  <img
-    src={avatar}
-    alt={username}
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      zIndex: 10,
-    }}
-  />
-) : (
-  <span style={{ fontSize: 120 }}>🔥</span>
-)}
-
-</div>
-
-
+        <div
+          style={{
+            width: 820,
+            backgroundColor: "#FFFFFF",
+            borderRadius: 56,
+            padding: "180px 80px 80px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "visible",
+          }}
+        >
+          {/* PROFILE PICTURE */}
+          <div
+            style={{
+              width: 320,
+              height: 320,
+              borderRadius: "50%",
+              border: "12px solid #FFFFFF",
+              overflow: "hidden",
+              position: "absolute",
+              top: -160,
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 120,
+              backgroundColor: "transparent",
+              zIndex: 20,
+            }}
+          >
+            {avatar ? (
+              <img
+                src={avatar}
+                alt={username}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              <span>🔥</span>
+            )}
+          </div>
 
           {/* USERNAME */}
           <div
@@ -660,7 +653,7 @@ export const MaxiShareCard = React.forwardRef<
             @{username}
           </div>
 
-          {/* SCORE PILL */}
+          {/* SCORE */}
           <div
             style={{
               display: "inline-flex",
@@ -693,7 +686,7 @@ export const MaxiShareCard = React.forwardRef<
             </div>
           </div>
 
-          {/* RANK TITLE */}
+          {/* RANK */}
           <div
             style={{
               fontSize: 44,
@@ -711,7 +704,6 @@ export const MaxiShareCard = React.forwardRef<
               fontSize: 28,
               fontWeight: 600,
               color: "#B91C1C",
-              lineHeight: 1.4,
             }}
           >
             ETHMumbai isn’t an event. It’s a movement.
@@ -719,7 +711,7 @@ export const MaxiShareCard = React.forwardRef<
         </div>
       </div>
 
-      {/* FOOTER LEFT */}
+      {/* FOOTERS */}
       <div
         style={{
           position: "absolute",
@@ -732,7 +724,6 @@ export const MaxiShareCard = React.forwardRef<
         ethmumbai-maxi-checker
       </div>
 
-      {/* FOOTER RIGHT */}
       <div
         style={{
           position: "absolute",

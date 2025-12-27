@@ -581,41 +581,38 @@ export const MaxiShareCard = React.forwardRef<
           }}
         >
           {/* PROFILE IMAGE – TOP MOST LAYER */}
-          <div
-            style={{
-              width: 320,
-              height: 320,
-              borderRadius: "50%",
-              border: "12px solid #FFFFFF",
-              overflow: "hidden",
-              position: "absolute",
-              top: -160,
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 9999, // 🔥 ABOVE EVERYTHING
-              backgroundColor: "#FFFFFF",
-            }}
-          >
-            <img
-              src={profileImage}
-              alt={username}
-              crossOrigin="anonymous"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  parent.innerHTML =
-                    "<span style='font-size:120px'>🔥</span>";
-                }
-              }}
-            />
-          </div>
+<div
+  style={{
+    width: 320,
+    height: 320,
+    borderRadius: "50%",
+    border: "12px solid #FFFFFF",
+    overflow: "hidden",
+    position: "absolute",
+    top: -160,
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 9999,
+    backgroundColor: "#FFFFFF",
+  }}
+>
+  <img
+    src={`https://unavatar.io/x/${username}`}
+    alt={username}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    }}
+    onError={(e) => {
+      e.currentTarget.style.display = "none";
+      const parent = e.currentTarget.parentElement;
+      if (parent) parent.innerHTML = "🔥";
+    }}
+  />
+</div>
+
 
           {/* USERNAME */}
           <div

@@ -40,9 +40,12 @@ Inspired by Mumbai’s iconic **BEST bus culture** — bold, accessible, and bui
 ---
 
 ## 🖼️ Demo & Screenshots
+> HOME PAGE
 ![Home Page](./images/home.png)
+> LEADERBOARD
+![Leaderboard](./images/working.png)
 
-> Add screenshots of the working website below
+
 
 ```md
 ![Home Page](./images/home.png)

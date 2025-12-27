@@ -530,7 +530,6 @@
 
 
 //------------------EDA MONAEEE GOOD VERY GOOD--------
-
 import React from "react";
 
 interface MaxiShareCardProps {
@@ -559,7 +558,7 @@ export const MaxiShareCard = React.forwardRef<
         fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
-      {/* Overlay */}
+      {/* Red overlay */}
       <div
         style={{
           position: "absolute",
@@ -568,129 +567,144 @@ export const MaxiShareCard = React.forwardRef<
         }}
       />
 
-      {/* Card */}
+      {/* CENTER WRAPPER */}
       <div
         style={{
           position: "relative",
-          margin: "120px auto",
-          width: 820,
-          backgroundColor: "#ffffff",
-          borderRadius: 48,
-          padding: "120px 80px 80px",
-          textAlign: "center",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        {/* Profile picture */}
+        {/* WHITE CARD */}
         <div
           style={{
-            width: 220,
-            height: 220,
-            borderRadius: "50%",
-            border: "12px solid white",
-            overflow: "hidden",
-            margin: "-220px auto 24px",
-            backgroundColor: "#FDE047",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 96,
+            width: 820,
+            backgroundColor: "#ffffff",
+            borderRadius: 56,
+            padding: "140px 80px 80px",
+            textAlign: "center",
+            position: "relative",
           }}
         >
-          {profileImage ? (
-            <img
-              src={profileImage}
-              alt={username}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
-          ) : (
-            fallbackEmoji
-          )}
-        </div>
-
-        {/* Username */}
-        <div
-          style={{
-            fontSize: 40,
-            fontWeight: 800,
-            color: "#DC2626",
-            marginBottom: 32,
-          }}
-        >
-          @{username}
-        </div>
-
-        {/* Score pill */}
-        <div
-          style={{
-            display: "inline-flex",
-            borderRadius: 24,
-            overflow: "hidden",
-            marginBottom: 32,
-          }}
-        >
+          {/* PROFILE IMAGE */}
           <div
             style={{
-              backgroundColor: "#0EA5E9",
-              color: "white",
-              padding: "20px 36px",
-              fontSize: 36,
-              fontWeight: 800,
+              width: 240,
+              height: 240,
+              borderRadius: "50%",
+              border: "12px solid white",
+              backgroundColor: "#FDE047",
+              overflow: "hidden",
+              position: "absolute",
+              top: -120,
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 96,
             }}
           >
-            SCORE
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt={username}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+            ) : (
+              fallbackEmoji
+            )}
           </div>
+
+          {/* USERNAME */}
           <div
             style={{
-              backgroundColor: "#FACC15",
-              color: "#7C2D12",
-              padding: "20px 44px",
+              marginTop: 16,
+              fontSize: 40,
+              fontWeight: 800,
+              color: "#DC2626",
+              marginBottom: 32,
+            }}
+          >
+            @{username}
+          </div>
+
+          {/* SCORE PILL */}
+          <div
+            style={{
+              display: "inline-flex",
+              borderRadius: 28,
+              overflow: "hidden",
+              marginBottom: 36,
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "#0EA5E9",
+                color: "#ffffff",
+                padding: "20px 40px",
+                fontSize: 36,
+                fontWeight: 800,
+              }}
+            >
+              SCORE
+            </div>
+            <div
+              style={{
+                backgroundColor: "#FACC15",
+                color: "#7C2D12",
+                padding: "20px 48px",
+                fontSize: 44,
+                fontWeight: 900,
+              }}
+            >
+              {score}
+            </div>
+          </div>
+
+          {/* RANK TITLE */}
+          <div
+            style={{
               fontSize: 44,
               fontWeight: 900,
+              color: "#DC2626",
+              marginBottom: 20,
             }}
           >
-            {score}
+            {rankTitle}
           </div>
-        </div>
 
-        {/* Rank */}
-        <div
-          style={{
-            fontSize: 44,
-            fontWeight: 900,
-            color: "#DC2626",
-            marginBottom: 24,
-          }}
-        >
-          {rankTitle}
-        </div>
-
-        {/* Tagline */}
-        <div
-          style={{
-            fontSize: 28,
-            fontWeight: 600,
-            color: "#B91C1C",
-            marginBottom: 60,
-          }}
-        >
-          ETHMumbai isn’t an event. It’s a movement.
+          {/* TAGLINE */}
+          <div
+            style={{
+              fontSize: 28,
+              fontWeight: 600,
+              color: "#B91C1C",
+              lineHeight: 1.4,
+            }}
+          >
+            ETHMumbai isn’t an event. It’s a movement.
+          </div>
         </div>
       </div>
 
-      {/* Footer */}
+      {/* FOOTER LEFT */}
       <div
         style={{
           position: "absolute",
           bottom: 40,
           left: 60,
-          color: "white",
+          color: "#ffffff",
           fontSize: 22,
           opacity: 0.9,
         }}
@@ -698,12 +712,13 @@ export const MaxiShareCard = React.forwardRef<
         ethmumbai-maxi-checker
       </div>
 
+      {/* FOOTER RIGHT */}
       <div
         style={{
           position: "absolute",
           bottom: 40,
           right: 60,
-          color: "white",
+          color: "#ffffff",
           fontSize: 22,
           opacity: 0.9,
         }}
@@ -715,4 +730,3 @@ export const MaxiShareCard = React.forwardRef<
 });
 
 MaxiShareCard.displayName = "MaxiShareCard";
-

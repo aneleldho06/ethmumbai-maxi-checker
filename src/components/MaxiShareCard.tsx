@@ -577,40 +577,44 @@ export const MaxiShareCard = React.forwardRef<
             position: "relative",
           }}
         >
-          {/* PROFILE PICTURE (SINGLE CIRCLE – FIXED) */}
-          <div
-            style={{
-              width: 320,
-              height: 320,
-              borderRadius: "50%",
-              border: "12px solid #FFFFFF",
-              overflow: "hidden",
-              backgroundColor: "#FACC15",
-              position: "absolute",
-              top: -160,
-              left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 120,
-            }}
-          >
-            <img
-              src={profileImage}
-              alt={username}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                const parent = e.currentTarget.parentElement;
-                if (parent) parent.innerHTML = "🔥";
-              }}
-            />
-          </div>
+ {/* PROFILE PICTURE (SINGLE CIRCLE – FINAL FIX) */}
+<div
+  style={{
+    width: 320,
+    height: 320,
+    borderRadius: "50%",
+    border: "12px solid #FFFFFF",
+    overflow: "hidden",
+    position: "absolute",
+    top: -160,
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 120,
+    backgroundColor: "transparent", // ✅ NO YELLOW LAYER
+  }}
+>
+  <img
+    src={`https://unavatar.io/twitter/${username}`}
+    alt={username}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    }}
+    onError={(e) => {
+      // Hide broken image
+      e.currentTarget.style.display = "none";
+
+      // Show emoji fallback
+      const parent = e.currentTarget.parentElement;
+      if (parent) parent.textContent = "🔥";
+    }}
+  />
+</div>
 
           {/* USERNAME */}
           <div

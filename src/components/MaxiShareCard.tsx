@@ -536,14 +536,13 @@ interface MaxiShareCardProps {
   username: string;
   score: number;
   rankTitle: string;
-  profileImage?: string;
 }
 
 export const MaxiShareCard = React.forwardRef<
   HTMLDivElement,
   MaxiShareCardProps
->(({ username, score, rankTitle, profileImage }, ref) => {
-  const fallbackEmoji = "🔥";
+>(({ username, score, rankTitle }, ref) => {
+  const profileImage = `https://unavatar.io/twitter/${username}`;
 
   return (
     <div
@@ -552,25 +551,15 @@ export const MaxiShareCard = React.forwardRef<
         width: 1080,
         height: 1080,
         position: "relative",
-        backgroundImage: "url(/ethmumbai-bg.png)",
+        backgroundImage: "url(/ethmumbai-bg.png)", // EXACT background
         backgroundSize: "cover",
         backgroundPosition: "center",
         fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
-      {/* Red overlay */}
+      {/* CENTER CARD */}
       <div
         style={{
-          position: "absolute",
-          inset: 0,
-          backgroundColor: "rgba(220, 38, 38, 0.92)",
-        }}
-      />
-
-      {/* CENTER WRAPPER */}
-      <div
-        style={{
-          position: "relative",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -578,84 +567,55 @@ export const MaxiShareCard = React.forwardRef<
           alignItems: "center",
         }}
       >
-        {/* WHITE CARD */}
         <div
           style={{
             width: 820,
-            backgroundColor: "#ffffff",
+            backgroundColor: "#FFFFFF",
             borderRadius: 56,
-            padding: "140px 80px 80px",
+            padding: "180px 80px 80px",
             textAlign: "center",
             position: "relative",
           }}
         >
-          {/* PROFILE IMAGE */}
+          {/* PROFILE PICTURE (SINGLE CIRCLE – FIXED) */}
           <div
             style={{
-              width: 240,
-              height: 240,
+              width: 320,
+              height: 320,
               borderRadius: "50%",
-              border: "12px solid white",
-              backgroundColor: "#FDE047",
+              border: "12px solid #FFFFFF",
               overflow: "hidden",
+              backgroundColor: "#FACC15",
               position: "absolute",
-              top: -120,
+              top: -160,
               left: "50%",
               transform: "translateX(-50%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 96,
+              fontSize: 120,
             }}
           >
-
-            
-            {/* PROFILE PICTURE */}
-<div
-  style={{
-    width: 350,
-    height: 350,
-    borderRadius: "50%",
-    border: "12px solid #FFFFFF",
-    overflow: "hidden",
-    marginBottom: 28,
-    backgroundColor: "#FFFFFF22",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 120, // fallback emoji size
-  }}
->
-  <img
-    src={`https://unavatar.io/twitter/${username}`}
-    alt={username}
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-    }}
-    onError={(e) => {
-      // Hide broken image
-      e.currentTarget.style.display = "none";
-
-      // Inject fallback emoji inside the same circle
-      const parent = e.currentTarget.parentElement;
-      if (parent) {
-        parent.innerHTML = "🔥";
-      }
-    }}
-  />
-</div>
-
-
-            
-            
+            <img
+              src={profileImage}
+              alt={username}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+                const parent = e.currentTarget.parentElement;
+                if (parent) parent.innerHTML = "🔥";
+              }}
+            />
           </div>
 
           {/* USERNAME */}
           <div
             style={{
-              marginTop: 16,
+              marginTop: 24,
               fontSize: 40,
               fontWeight: 800,
               color: "#DC2626",
@@ -677,7 +637,7 @@ export const MaxiShareCard = React.forwardRef<
             <div
               style={{
                 backgroundColor: "#0EA5E9",
-                color: "#ffffff",
+                color: "#FFFFFF",
                 padding: "20px 40px",
                 fontSize: 36,
                 fontWeight: 800,
@@ -704,7 +664,7 @@ export const MaxiShareCard = React.forwardRef<
               fontSize: 44,
               fontWeight: 900,
               color: "#DC2626",
-              marginBottom: 20,
+              marginBottom: 24,
             }}
           >
             {rankTitle}
@@ -730,9 +690,8 @@ export const MaxiShareCard = React.forwardRef<
           position: "absolute",
           bottom: 40,
           left: 60,
-          color: "#ffffff",
+          color: "#FFFFFF",
           fontSize: 22,
-          opacity: 0.9,
         }}
       >
         ethmumbai-maxi-checker
@@ -744,9 +703,8 @@ export const MaxiShareCard = React.forwardRef<
           position: "absolute",
           bottom: 40,
           right: 60,
-          color: "#ffffff",
+          color: "#FFFFFF",
           fontSize: 22,
-          opacity: 0.9,
         }}
       >
         Made by @0xhiddenminner

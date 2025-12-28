@@ -588,10 +588,10 @@ export const MaxiShareCard = React.forwardRef<
     height: 320,
     borderRadius: "50%",
     border: "12px solid #FFFFFF",
-    overflow: "hidden",
+    overflow: "visible",//before it was hidden
     position: "absolute",
     top: -160,
-    left: "100%", //changed from 50%
+    left: "50%", 
     transform: "translateX(-50%)",
     zIndex: 9999,
     backgroundColor: "#FFFFFF",

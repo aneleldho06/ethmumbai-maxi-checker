@@ -581,7 +581,7 @@ export const MaxiShareCard = React.forwardRef<
             overflow: "visible", // 🔑 IMPORTANT
           }}
         >
-          {/* PROFILE IMAGE – TOP MOST LAYER */}
+//---------PROFILE PICTURE ------------
 <div
   style={{
     width: 320,
@@ -590,28 +590,23 @@ export const MaxiShareCard = React.forwardRef<
     border: "12px solid #FFFFFF",
     overflow: "hidden",
     position: "absolute",
-    top: -160,
+    top: 0,
     left: "50%",
-    transform: "translateX(-50%)",
+    transform: "translate(-50%, -50%)",
     zIndex: 9999,
     backgroundColor: "#FFFFFF",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }}
 >
-
-
   <img
     src={`https://unavatar.io/x/${username}`}
     alt={username}
     style={{
       width: "100%",
       height: "100%",
-      objectFit: "cover", // changed cover to contain ,again changed
-      display: "block",
-    }}
-    onError={(e) => {
-      e.currentTarget.style.display = "none";
-      const parent = e.currentTarget.parentElement;
-      if (parent) parent.innerHTML = "🔥";
+      objectFit: "cover",
     }}
   />
 </div>

@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { useLeaderboard, LeaderboardEntry } from "@/hooks/useLeaderboard";
 import { cn } from "@/lib/utils";
 
+const getProfileImageUrl = (username: string) => {
+  return `https://unavatar.io/x/${username}`;
+};
+
 const ProfileImage = ({ 
-  src, 
   username, 
   size = "md" 
 }: { 
-  src: string | null; 
   username: string; 
   size?: "sm" | "md" | "lg" | "xl";
 }) => {
@@ -28,26 +30,25 @@ const ProfileImage = ({
     xl: "text-4xl",
   };
 
+  const imageUrl = getProfileImageUrl(username);
+
   return (
     <div className={cn(
       "rounded-full bg-destructive flex items-center justify-center overflow-hidden border-4 border-background shadow-lg",
       sizeClasses[size]
     )}>
-      {src ? (
-        <img 
-          src={src} 
-          alt={`@${username}`}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-            e.currentTarget.nextElementSibling?.classList.remove('hidden');
-          }}
-        />
-      ) : null}
+      <img 
+        src={imageUrl} 
+        alt={`@${username}`}
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          e.currentTarget.style.display = 'none';
+          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+        }}
+      />
       <div className={cn(
-        "w-full h-full flex items-center justify-center bg-destructive text-destructive-foreground font-bold",
-        fallbackSizeClasses[size],
-        src ? "hidden" : ""
+        "w-full h-full flex items-center justify-center bg-destructive text-destructive-foreground font-bold hidden",
+        fallbackSizeClasses[size]
       )}>
         {username.charAt(0).toUpperCase()}
       </div>
@@ -105,7 +106,6 @@ const PodiumCard = ({ entry, position }: { entry: LeaderboardEntry; position: 1 
       {/* Profile Image */}
       <div className="relative mb-4">
         <ProfileImage 
-          src={entry.profileImageUrl} 
           username={entry.username} 
           size={position === 1 ? "xl" : "lg"}
         />
@@ -149,7 +149,6 @@ const RankCard = ({ entry }: { entry: LeaderboardEntry }) => {
 
       {/* Profile Image */}
       <ProfileImage 
-        src={entry.profileImageUrl} 
         username={entry.username} 
         size="sm"
       />

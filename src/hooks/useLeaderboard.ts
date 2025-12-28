@@ -14,6 +14,7 @@ export interface LeaderboardEntry {
   totalMentions: number;
   rankInfo: RankInfo;
   lastChecked: string;
+  profileImageUrl: string | null;
 }
 
 export function useLeaderboard() {
@@ -42,6 +43,7 @@ export function useLeaderboard() {
         totalMentions: entry.total_mentions,
         rankInfo: getRank(entry.score),
         lastChecked: entry.last_checked,
+        profileImageUrl: entry.profile_image_url,
       }));
 
       setEntries(formattedEntries);
@@ -65,6 +67,7 @@ export function useLeaderboard() {
     retweetCount: number;
     totalMentions: number;
     rankTitle: string;
+    profileImageUrl?: string | null;
   }) => {
     try {
       const { error } = await supabase
@@ -78,6 +81,7 @@ export function useLeaderboard() {
             retweet_count: data.retweetCount,
             total_mentions: data.totalMentions,
             rank_title: data.rankTitle,
+            profile_image_url: data.profileImageUrl,
           },
           {
             onConflict: "username",

@@ -66,6 +66,19 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Fetch user profile to get avatar
+    let profileImageUrl: string | null = null;
+    try {
+      console.log(`Fetching profile for @${cleanUsername}`);
+      const profile = await scraper.getProfile(cleanUsername);
+      if (profile && profile.avatar) {
+        profileImageUrl = profile.avatar;
+        console.log(`Got profile image: ${profileImageUrl}`);
+      }
+    } catch (profileError) {
+      console.error(`Error fetching profile for @${cleanUsername}:`, profileError);
+    }
+
     // Search for ETHMumbai tweets from the user
     const searchQuery = `from:${cleanUsername} (ETHMumbai OR #ETHMumbai OR @ETHMumbai)`;
     console.log(`Search query: ${searchQuery}`);
@@ -115,6 +128,7 @@ Deno.serve(async (req) => {
         replyCount,
         retweetCount,
         totalMentions,
+        profileImageUrl,
         tweets: tweets.slice(0, 10),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

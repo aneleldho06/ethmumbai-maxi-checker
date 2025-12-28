@@ -140,6 +140,29 @@
     background: var(--gradient-bronze);
     @apply text-primary-foreground;
   }
+
+  /* Premium Leaderboard Page Styles */
+  .leaderboard-header-bg {
+    background: hsl(var(--bus-yellow));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .leaderboard-header-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 80%, hsl(var(--best-red) / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, hsl(var(--best-red) / 0.1) 0%, transparent 50%);
+  }
+
+  .leaderboard-card {
+    @apply flex items-center gap-4 p-4 bg-card rounded-xl border border-border/50 shadow-sm transition-all duration-200;
+  }
+
+  .leaderboard-card:hover {
+    @apply shadow-lg -translate-y-0.5 border-primary/30;
+  }
 }
 
 @layer utilities {

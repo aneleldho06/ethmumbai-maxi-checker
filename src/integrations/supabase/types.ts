@@ -20,6 +20,7 @@ export type Database = {
           id: string
           last_checked: string
           original_count: number
+          profile_image_url: string | null
           rank_title: string
           reply_count: number
           retweet_count: number
@@ -33,6 +34,7 @@ export type Database = {
           id?: string
           last_checked?: string
           original_count?: number
+          profile_image_url?: string | null
           rank_title?: string
           reply_count?: number
           retweet_count?: number
@@ -46,6 +48,7 @@ export type Database = {
           id?: string
           last_checked?: string
           original_count?: number
+          profile_image_url?: string | null
           rank_title?: string
           reply_count?: number
           retweet_count?: number

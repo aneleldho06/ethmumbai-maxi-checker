@@ -592,7 +592,7 @@ export const MaxiShareCard = React.forwardRef<
     position: "absolute",
     top: 0,
     left: "50%",
-    transform: "translate(-50%, -50%)",
+    transform: "translate(-100%, -100%)",
     zIndex: 9999,
     backgroundColor: "#FFFFFF",
   }}

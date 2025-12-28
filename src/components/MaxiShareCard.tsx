@@ -590,13 +590,14 @@ export const MaxiShareCard = React.forwardRef<
     border: "12px solid #FFFFFF",
     overflow: "hidden",
     position: "absolute",
-    top: -160,
+    top: 0,
     left: "50%",
-    transform: "translateX(-50%)",
+    transform: "translate(-50%, -50%)",
     zIndex: 9999,
     backgroundColor: "#FFFFFF",
   }}
 >
+
   <img
     src={`https://unavatar.io/x/${username}`}
     alt={username}

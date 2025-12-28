@@ -604,7 +604,7 @@ export const MaxiShareCard = React.forwardRef<
     style={{
       width: "100%",
       height: "100%",
-      objectFit: "cover",
+      objectFit: "contain", // changed cover to contain
       display: "block",
     }}
     onError={(e) => {

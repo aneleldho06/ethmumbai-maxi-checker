@@ -590,11 +590,12 @@ export const MaxiShareCard = React.forwardRef<
     border: "12px solid #FFFFFF",
     overflow: "hidden",
     position: "absolute",
-    top: 0,
+    top: -100,
     left: "50%",
-    transform: "translate(-100%, -100%)",
+    transform: "translate(-50%, -50%)",
     zIndex: 9999,
     backgroundColor: "#FFFFFF",
+    
   }}
 >
 
@@ -604,7 +605,7 @@ export const MaxiShareCard = React.forwardRef<
     style={{
       width: "100%",
       height: "100%",
-      objectFit: "contain", // changed cover to contain
+      objectFit: "cover", // changed cover to contain ,again changed
       display: "block",
     }}
     onError={(e) => {

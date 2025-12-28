@@ -17,7 +17,8 @@ const Index = () => {
     replyCount: number,
     retweetCount: number,
     totalMentions: number,
-    rankTitle: string
+    rankTitle: string,
+    profileImageUrl?: string | null
   ) => {
     await upsertEntry({
       username,
@@ -27,6 +28,7 @@ const Index = () => {
       retweetCount,
       totalMentions,
       rankTitle,
+      profileImageUrl,
     });
     setHighlightUsername(username);
   };

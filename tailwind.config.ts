@@ -57,6 +57,7 @@ export default {
           blue: "hsl(var(--eth-blue))",
           green: "hsl(var(--bus-green))",
         },
+        "bus-black": "hsl(var(--bus-black))",
       },
       borderRadius: {
         lg: "var(--radius)",

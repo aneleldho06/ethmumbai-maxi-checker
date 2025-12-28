@@ -16,7 +16,8 @@ interface UsernameCheckerProps {
     replyCount: number,
     retweetCount: number,
     totalMentions: number,
-    rankTitle: string
+    rankTitle: string,
+    profileImageUrl?: string | null
   ) => void;
 }
 
@@ -27,6 +28,7 @@ interface Results {
   originalCount: number;
   replyCount: number;
   retweetCount: number;
+  profileImageUrl: string | null;
 }
 
 export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
@@ -42,7 +44,7 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
     setLoading(true);
     setResults(null);
 
-    let tweetData: { originalCount: number; replyCount: number; retweetCount: number; totalMentions: number };
+    let tweetData: { originalCount: number; replyCount: number; retweetCount: number; totalMentions: number; profileImageUrl: string | null };
 
     try {
       // Try to fetch real Twitter data via edge function
@@ -53,7 +55,8 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
       if (error || data?.error || data?.fallback) {
         console.log('Twitter API unavailable, using mock data:', error || data?.error);
         // Fallback to mock data if Twitter API fails
-        tweetData = generateMockTweetData(cleanUsername);
+        const mockData = generateMockTweetData(cleanUsername);
+        tweetData = { ...mockData, profileImageUrl: null };
         toast({
           title: "Using simulated data",
           description: "Twitter API is unavailable. Showing estimated results.",
@@ -64,12 +67,14 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
           replyCount: data.replyCount,
           retweetCount: data.retweetCount,
           totalMentions: data.totalMentions,
+          profileImageUrl: data.profileImageUrl || null,
         };
       }
     } catch (err) {
       console.error('Error fetching Twitter data:', err);
       // Fallback to mock data
-      tweetData = generateMockTweetData(cleanUsername);
+      const mockData = generateMockTweetData(cleanUsername);
+      tweetData = { ...mockData, profileImageUrl: null };
       toast({
         title: "Using simulated data",
         description: "Could not connect to Twitter. Showing estimated results.",
@@ -87,7 +92,8 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
       tweetData.replyCount,
       tweetData.retweetCount,
       tweetData.totalMentions,
-      rankInfo.title
+      rankInfo.title,
+      tweetData.profileImageUrl
     );
     
     setResults({
@@ -97,6 +103,7 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
       originalCount: tweetData.originalCount,
       replyCount: tweetData.replyCount,
       retweetCount: tweetData.retweetCount,
+      profileImageUrl: tweetData.profileImageUrl,
     });
     
     setLoading(false);

@@ -581,7 +581,7 @@ export const MaxiShareCard = React.forwardRef<
             overflow: "visible", // 🔑 IMPORTANT
           }}
         >
-//---------PROFILE PICTURE ------------
+
 <div
   style={{
     width: 320,
@@ -590,9 +590,9 @@ export const MaxiShareCard = React.forwardRef<
     border: "12px solid #FFFFFF",
     overflow: "hidden",
     position: "absolute",
-    top: 0,
+    top: -160,
     left: "50%",
-    transform: "translate(-50%, -50%)",
+    transform: "translateX(-50%)",
     zIndex: 9999,
     backgroundColor: "#FFFFFF",
     display: "flex",

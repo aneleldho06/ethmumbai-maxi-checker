@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BusLoader } from "./BusLoader";
 import { ResultsCard } from "./ResultsCard";
-import { ScoreRevealOverlay } from "./ScoreRevealOverlay";
 import { calculateScore, getRank, generateMockTweetData } from "@/lib/rankingSystem";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -36,17 +35,6 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<Results | null>(null);
-  const [isRevealing, setIsRevealing] = useState(false);
-  const [revealData, setRevealData] = useState<{
-    username: string;
-    score: number;
-    originalCount: number;
-    replyCount: number;
-    retweetCount: number;
-    totalMentions: number;
-    rankTitle: string;
-    rankEmoji: string;
-  } | null>(null);
 
   const handleCheck = async () => {
     if (!username.trim()) return;
@@ -108,8 +96,7 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
       tweetData.profileImageUrl
     );
     
-    // Store results for later display
-    const resultData = {
+    setResults({
       username: cleanUsername,
       score,
       totalMentions: tweetData.totalMentions,
@@ -117,28 +104,9 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
       replyCount: tweetData.replyCount,
       retweetCount: tweetData.retweetCount,
       profileImageUrl: tweetData.profileImageUrl,
-    };
-    
-    // Set reveal data and trigger animation
-    setRevealData({
-      username: cleanUsername,
-      score,
-      originalCount: tweetData.originalCount,
-      replyCount: tweetData.replyCount,
-      retweetCount: tweetData.retweetCount,
-      totalMentions: tweetData.totalMentions,
-      rankTitle: rankInfo.title,
-      rankEmoji: rankInfo.emoji,
     });
     
-    setResults(resultData);
     setLoading(false);
-    setIsRevealing(true);
-  };
-
-  const handleRevealComplete = () => {
-    setIsRevealing(false);
-    setRevealData(null);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -149,21 +117,6 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
 
   return (
     <div className="space-y-8">
-      {/* Score Reveal Animation Overlay */}
-      {isRevealing && revealData && (
-        <ScoreRevealOverlay
-          username={revealData.username}
-          score={revealData.score}
-          originalCount={revealData.originalCount}
-          replyCount={revealData.replyCount}
-          retweetCount={revealData.retweetCount}
-          totalMentions={revealData.totalMentions}
-          rankTitle={revealData.rankTitle}
-          rankEmoji={revealData.rankEmoji}
-          onComplete={handleRevealComplete}
-        />
-      )}
-
       {/* Input section */}
       <div className="bus-card p-6 md:p-8">
         <div className="space-y-6">
@@ -218,8 +171,8 @@ export function UsernameChecker({ onResultsUpdate }: UsernameCheckerProps) {
         </div>
       )}
       
-      {/* Results - shown after animation completes */}
-      {results && !loading && !isRevealing && (
+      {/* Results */}
+      {results && !loading && (
         <ResultsCard
           username={results.username}
           score={results.score}

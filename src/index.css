@@ -202,6 +202,59 @@
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* Score Reveal Animations */
+@keyframes color-wipe {
+  0% { transform: scaleX(0); transform-origin: left; }
+  50% { transform: scaleX(1); transform-origin: left; }
+  50.1% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+@keyframes bus-enter {
+  0% { transform: translateX(-150%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes bus-stop-bounce {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-8px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-4px); }
+}
+
+@keyframes spotlight-glow {
+  0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+  50% { box-shadow: 0 0 60px 20px rgba(255, 215, 0, 0.4); }
+  100% { box-shadow: 0 0 40px 10px rgba(255, 215, 0, 0.3); }
+}
+
+@keyframes profile-zoom {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes score-reveal {
+  0% { transform: scale(0.5); opacity: 0; filter: blur(10px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+@keyframes rank-emphasis {
+  0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+  50% { transform: scale(1.1) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .animate-bus-drive {
   animation: bus-drive 3s ease-in-out;
 }
@@ -216,4 +269,36 @@
 
 .animate-score-pop {
   animation: score-pop 0.5s ease-out forwards;
+}
+
+.animate-bus-enter {
+  animation: bus-enter 1s ease-out forwards;
+}
+
+.animate-bus-stop-bounce {
+  animation: bus-stop-bounce 0.8s ease-out;
+}
+
+.animate-spotlight-glow {
+  animation: spotlight-glow 1s ease-out forwards;
+}
+
+.animate-profile-zoom {
+  animation: profile-zoom 0.6s ease-out forwards;
+}
+
+.animate-score-reveal {
+  animation: score-reveal 0.8s ease-out forwards;
+}
+
+.animate-rank-emphasis {
+  animation: rank-emphasis 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out forwards;
 }

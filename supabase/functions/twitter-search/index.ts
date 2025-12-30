@@ -14,8 +14,34 @@ interface TweetData {
   timestamp: number;
 }
 
+async function loginWithRetry(scraper: Scraper, username: string, password: string, maxRetries = 2): Promise<boolean> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`Login attempt ${attempt}/${maxRetries}...`);
+      await scraper.login(username, password);
+      
+      if (await scraper.isLoggedIn()) {
+        console.log('Login successful!');
+        return true;
+      }
+    } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : String(e);
+      console.error(`Login attempt ${attempt} failed:`, errorMessage);
+      
+      if (errorMessage.includes('AlternateIdentifier') || errorMessage.includes('verification')) {
+        console.error('Twitter requires additional verification. Please use TWITTER_COOKIES instead.');
+        throw new Error('Authentication error: Twitter requires additional verification. Please export and use TWITTER_COOKIES.');
+      }
+      
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    }
+  }
+  return false;
+}
+
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -33,40 +59,56 @@ Deno.serve(async (req) => {
     const cleanUsername = username.replace('@', '').trim();
     console.log(`Searching tweets for username: ${cleanUsername}`);
 
-    // Initialize scraper
     const scraper = new Scraper();
     
-    // Get Twitter credentials from environment
     const twitterUsername = Deno.env.get('TWITTER_USERNAME');
     const twitterPassword = Deno.env.get('TWITTER_PASSWORD');
     const twitterCookies = Deno.env.get('TWITTER_COOKIES');
 
-    // Try to login with cookies first, then credentials
+    let isAuthenticated = false;
+
+    // Try cookies first (most reliable method)
     if (twitterCookies) {
       try {
         const cookies = JSON.parse(twitterCookies);
         await scraper.setCookies(cookies);
-        console.log('Set cookies from environment');
+        isAuthenticated = await scraper.isLoggedIn();
+        console.log(isAuthenticated ? 'Authenticated via cookies' : 'Cookies expired or invalid');
       } catch (e) {
         console.error('Error setting cookies:', e);
       }
     }
 
-    if (!(await scraper.isLoggedIn())) {
-      if (twitterUsername && twitterPassword) {
-        console.log('Logging in with credentials...');
-        await scraper.login(twitterUsername, twitterPassword);
-        
-        if (!(await scraper.isLoggedIn())) {
-          throw new Error('Failed to login to Twitter');
-        }
-        console.log('Logged in successfully');
-      } else {
-        console.log('No credentials provided, attempting without login');
+    // Fallback to username/password
+    if (!isAuthenticated && twitterUsername && twitterPassword) {
+      try {
+        isAuthenticated = await loginWithRetry(scraper, twitterUsername, twitterPassword);
+      } catch (e: unknown) {
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        console.error('Authentication failed:', errorMessage);
+        return new Response(
+          JSON.stringify({ 
+            error: errorMessage,
+            fallback: true,
+            hint: 'Twitter requires additional verification. You need to provide TWITTER_COOKIES instead of username/password.'
+          }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
     }
 
-    // Fetch user profile to get avatar
+    if (!isAuthenticated) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Not authenticated to Twitter',
+          fallback: true,
+          hint: 'Please configure TWITTER_COOKIES secret with valid session cookies.'
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Fetch user profile
     let profileImageUrl: string | null = null;
     try {
       console.log(`Fetching profile for @${cleanUsername}`);
@@ -79,7 +121,7 @@ Deno.serve(async (req) => {
       console.error(`Error fetching profile for @${cleanUsername}:`, profileError);
     }
 
-    // Search for ETHMumbai tweets from the user
+    // Search for ETHMumbai tweets
     const searchQuery = `from:${cleanUsername} (ETHMumbai OR #ETHMumbai OR @ETHMumbai)`;
     console.log(`Search query: ${searchQuery}`);
 
@@ -105,7 +147,6 @@ Deno.serve(async (req) => {
         
         tweets.push(tweetData);
         
-        // Count by type
         if (tweetData.isRetweet) {
           retweetCount++;
         } else if (tweetData.isReply) {

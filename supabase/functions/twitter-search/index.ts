@@ -1,54 +1,18 @@
-import { Scraper, SearchMode } from "https://esm.sh/@the-convocation/twitter-scraper@0.9.0";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface TweetData {
-  id: string;
-  text: string;
-  isRetweet: boolean;
-  isReply: boolean;
-  username: string;
-  timestamp: number;
-}
-
-async function loginWithRetry(scraper: Scraper, username: string, password: string, maxRetries = 2): Promise<boolean> {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`Login attempt ${attempt}/${maxRetries}...`);
-      await scraper.login(username, password);
-      
-      if (await scraper.isLoggedIn()) {
-        console.log('Login successful!');
-        return true;
-      }
-    } catch (e: unknown) {
-      const errorMessage = e instanceof Error ? e.message : String(e);
-      console.error(`Login attempt ${attempt} failed:`, errorMessage);
-      
-      if (errorMessage.includes('AlternateIdentifier') || errorMessage.includes('verification')) {
-        console.error('Twitter requires additional verification. Please use TWITTER_COOKIES instead.');
-        throw new Error('Authentication error: Twitter requires additional verification. Please export and use TWITTER_COOKIES.');
-      }
-      
-      if (attempt < maxRetries) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-    }
-  }
-  return false;
-}
-
-Deno.serve(async (req) => {
+serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const { username } = await req.json();
-    
+
     if (!username) {
       return new Response(
         JSON.stringify({ error: 'Username is required' }),
@@ -59,124 +23,139 @@ Deno.serve(async (req) => {
     const cleanUsername = username.replace('@', '').trim();
     console.log(`Searching tweets for username: ${cleanUsername}`);
 
-    const scraper = new Scraper();
-    
-    const twitterUsername = Deno.env.get('TWITTER_USERNAME');
-    const twitterPassword = Deno.env.get('TWITTER_PASSWORD');
-    const twitterCookies = Deno.env.get('TWITTER_COOKIES');
+    const bearerToken = Deno.env.get('TWITTER_BEARER_TOKEN');
 
-    let isAuthenticated = false;
-
-    // Try cookies first (most reliable method)
-    if (twitterCookies) {
-      try {
-        const cookies = JSON.parse(twitterCookies);
-        await scraper.setCookies(cookies);
-        isAuthenticated = await scraper.isLoggedIn();
-        console.log(isAuthenticated ? 'Authenticated via cookies' : 'Cookies expired or invalid');
-      } catch (e) {
-        console.error('Error setting cookies:', e);
-      }
-    }
-
-    // Fallback to username/password
-    if (!isAuthenticated && twitterUsername && twitterPassword) {
-      try {
-        isAuthenticated = await loginWithRetry(scraper, twitterUsername, twitterPassword);
-      } catch (e: unknown) {
-        const errorMessage = e instanceof Error ? e.message : String(e);
-        console.error('Authentication failed:', errorMessage);
-        return new Response(
-          JSON.stringify({ 
-            error: errorMessage,
-            fallback: true,
-            hint: 'Twitter requires additional verification. You need to provide TWITTER_COOKIES instead of username/password.'
-          }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-    }
-
-    if (!isAuthenticated) {
+    if (!bearerToken) {
+      console.error('TWITTER_BEARER_TOKEN not configured');
       return new Response(
         JSON.stringify({ 
-          error: 'Not authenticated to Twitter',
-          fallback: true,
-          hint: 'Please configure TWITTER_COOKIES secret with valid session cookies.'
+          error: 'Twitter API not configured',
+          fallback: true 
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Fetch user profile
-    let profileImageUrl: string | null = null;
-    try {
-      console.log(`Fetching profile for @${cleanUsername}`);
-      const profile = await scraper.getProfile(cleanUsername);
-      if (profile && profile.avatar) {
-        profileImageUrl = profile.avatar;
-        console.log(`Got profile image: ${profileImageUrl}`);
+    // First, get user ID from username
+    console.log(`Fetching user ID for @${cleanUsername}`);
+    const userResponse = await fetch(
+      `https://api.twitter.com/2/users/by/username/${cleanUsername}?user.fields=profile_image_url`,
+      {
+        headers: {
+          'Authorization': `Bearer ${bearerToken}`,
+        },
       }
-    } catch (profileError) {
-      console.error(`Error fetching profile for @${cleanUsername}:`, profileError);
+    );
+
+    if (!userResponse.ok) {
+      const errorText = await userResponse.text();
+      console.error(`User lookup failed: ${userResponse.status} - ${errorText}`);
+      return new Response(
+        JSON.stringify({ 
+          error: `User lookup failed: ${userResponse.status}`,
+          fallback: true 
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    // Search for ETHMumbai tweets
+    const userData = await userResponse.json();
+    
+    if (!userData.data) {
+      console.error('User not found:', userData);
+      return new Response(
+        JSON.stringify({ 
+          error: 'User not found',
+          fallback: true 
+        }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const userId = userData.data.id;
+    const profileImageUrl = userData.data.profile_image_url?.replace('_normal', '_400x400') || null;
+    console.log(`Found user ID: ${userId}, profile image: ${profileImageUrl}`);
+
+    // Search for tweets mentioning ETHMumbai from this user
     const searchQuery = `from:${cleanUsername} (ETHMumbai OR #ETHMumbai OR @ETHMumbai)`;
     console.log(`Search query: ${searchQuery}`);
 
-    const tweets: TweetData[] = [];
+    const searchResponse = await fetch(
+      `https://api.twitter.com/2/tweets/search/recent?query=${encodeURIComponent(searchQuery)}&max_results=100&tweet.fields=referenced_tweets,created_at,text`,
+      {
+        headers: {
+          'Authorization': `Bearer ${bearerToken}`,
+        },
+      }
+    );
+
+    if (!searchResponse.ok) {
+      const errorText = await searchResponse.text();
+      console.error(`Search failed: ${searchResponse.status} - ${errorText}`);
+      
+      // Check if it's a rate limit or access issue
+      if (searchResponse.status === 403) {
+        return new Response(
+          JSON.stringify({ 
+            error: 'Twitter API access denied. You may need elevated access for search.',
+            fallback: true 
+          }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      return new Response(
+        JSON.stringify({ 
+          error: `Search failed: ${searchResponse.status}`,
+          fallback: true 
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const searchData = await searchResponse.json();
+    console.log(`Search response:`, JSON.stringify(searchData));
+
     let originalCount = 0;
     let replyCount = 0;
     let retweetCount = 0;
 
-    try {
-      const searchResults = scraper.searchTweets(searchQuery, 100, SearchMode.Latest);
-      
-      for await (const tweet of searchResults) {
-        if (!tweet.id || !tweet.text) continue;
-        
-        const tweetData: TweetData = {
-          id: tweet.id,
-          text: tweet.text,
-          isRetweet: tweet.isRetweet ?? false,
-          isReply: !!tweet.inReplyToStatusId,
-          username: tweet.username ?? cleanUsername,
-          timestamp: tweet.timestamp ?? Date.now() / 1000,
-        };
-        
-        tweets.push(tweetData);
-        
-        if (tweetData.isRetweet) {
+    if (searchData.data && Array.isArray(searchData.data)) {
+      for (const tweet of searchData.data) {
+        const referencedTweets = tweet.referenced_tweets || [];
+        const isRetweet = referencedTweets.some((ref: { type: string }) => ref.type === 'retweeted');
+        const isReply = referencedTweets.some((ref: { type: string }) => ref.type === 'replied_to');
+        const isQuote = referencedTweets.some((ref: { type: string }) => ref.type === 'quoted');
+
+        if (isRetweet) {
           retweetCount++;
-        } else if (tweetData.isReply) {
+        } else if (isReply) {
           replyCount++;
         } else {
           originalCount++;
         }
+
+        console.log(`Tweet: ${tweet.text?.substring(0, 50)}... | RT: ${isRetweet}, Reply: ${isReply}, Quote: ${isQuote}`);
       }
-    } catch (searchError) {
-      console.error('Search error:', searchError);
     }
 
-    const totalMentions = tweets.length;
-    console.log(`Found ${totalMentions} tweets - Original: ${originalCount}, Replies: ${replyCount}, Retweets: ${retweetCount}`);
+    const totalMentions = originalCount + replyCount + retweetCount;
+    console.log(`Results - Original: ${originalCount}, Replies: ${replyCount}, Retweets: ${retweetCount}, Total: ${totalMentions}`);
 
     return new Response(
       JSON.stringify({
-        username: cleanUsername,
         originalCount,
         replyCount,
         retweetCount,
         totalMentions,
         profileImageUrl,
-        tweets: tweets.slice(0, 10),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
   } catch (error: unknown) {
     console.error('Error in twitter-search function:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch tweets';
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
       JSON.stringify({ 
         error: errorMessage,
